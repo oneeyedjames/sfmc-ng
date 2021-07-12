@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>
+	Event Details
+	<mat-icon mat-dialog-close class="close">close</mat-icon>
+</h1>
+<div mat-dialog-content>
+	<h2>List</h2>
+	<p>{{ event.ListName }}</p>
+	<h2>Email</h2>
+	<p>{{ event.EmailName }}</p>
+	<h2>Date</h2>
+	<p>{{ event.EventDate }}</p>
+	<h2>Type</h2>
+	<p>{{ event.EventType }}</p>
+	<p *ngIf="hasMoreInfo">
+		<mat-divider></mat-divider>
+	</p>
+	<div *ngIf="event.EventType == 'Bounce'">
+		<h2>Bounce Category</h2>
+		<p>{{ event.BounceCategory }}</p>
+		<h2>Bounce Type</h2>
+		<p>{{ event.BounceType }}</p>
+		<h2>SMTP Code</h2>
+		<p>{{ event.SMTPCode }}</p>
+		<h2>SMTP Reason</h2>
+		<p>{{ event.SMTPReason }}</p>
+	</div>
+	<div *ngIf="event.EventType == 'Click'">
+		<h2>URL</h2>
+		<p>{{ event.URL }}</p>
+	</div>
+	<div *ngIf="event.EventType == 'Unsub'">
+		<h2>Master Unsubscribed</h2>
+		<p>{{ event.IsMasterUnsubscribed }}</p>
+	</div>
+</div>

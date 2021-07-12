@@ -1,0 +1,48 @@
+<table mat-table multiTemplateDataRows [dataSource]="lists">
+	<ng-container matColumnDef="ListID">
+		<th mat-header-cell *matHeaderCellDef>List ID</th>
+		<td mat-cell *matCellDef="let list">{{ list.ListID }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="ListName">
+		<th mat-header-cell *matHeaderCellDef>List Name</th>
+		<td mat-cell *matCellDef="let list">
+			<span [matTooltip]="list.ListName">
+				{{ list.ListCode || list.ListName }}
+				<mat-icon>info</mat-icon>
+			</span>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Status">
+		<th mat-header-cell *matHeaderCellDef>Status</th>
+		<td mat-cell *matCellDef="let list">{{ list.Status }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="UnsubscribedDate">
+		<th mat-header-cell *matHeaderCellDef>Unsubscribed Date</th>
+		<td mat-cell *matCellDef="let list">{{ list.UnsubscribedDate }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="CreatedDate">
+		<th mat-header-cell *matHeaderCellDef>Created Date</th>
+		<td mat-cell *matCellDef="let list">{{ list.CreatedDate }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="ModifiedDate">
+		<th mat-header-cell *matHeaderCellDef>Modified Date</th>
+		<td mat-cell *matCellDef="let list">{{ list.ModifiedDate }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Extra">
+		<td mat-cell *matCellDef="let list" [attr.colspan]="cols.length">
+			<p>{{ list.ListName }}</p>
+			<p>Unsubscribed Date: {{ list.UnsubscribedDate }}</p>
+		</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="cols"></tr>
+	<tr mat-row *matRowDef="let row; columns: cols;"></tr>
+	<!--<tr mat-row *matRowDef="let row; columns: ['Extra']"
+		[class.empty-row]="row.UnsubscribedDate == null"></tr>-->
+</table>

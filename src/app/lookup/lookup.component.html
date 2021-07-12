@@ -1,0 +1,12 @@
+<mat-spinner *ngIf="loading" diameter="36" color="accent"
+	style="display: inline-block; vertical-align: middle"></mat-spinner>
+&nbsp;
+<mat-form-field appearance="standard">
+	<input matInput placeholder="Email Address"
+		[disabled]="loading" [(ngModel)]="email">
+	<!-- <mat-icon matPrefix>search</mat-icon> -->
+</mat-form-field>
+<button mat-icon-button mat-color="basic"
+	[disabled]="loading" (click)="search(email)">
+	<mat-icon matSuffix>search</mat-icon>
+</button>
