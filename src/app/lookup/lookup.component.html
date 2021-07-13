@@ -1,13 +1,22 @@
-<mat-spinner *ngIf="loading" diameter="36" color="accent"
-	style="display: inline-block; vertical-align: middle"></mat-spinner>
+<mat-form-field appearance="standard">
+	<mat-label>Search By</mat-label>
+	<mat-select [(ngModel)]="field" (change)="input = ''">
+		<mat-option value="key">Subscriber Key</mat-option>
+		<mat-option value="email">Email Address</mat-option>
+	</mat-select>
+</mat-form-field>
 &nbsp;
 <mat-form-field appearance="standard">
-	<input matInput placeholder="Email Address"
-		[disabled]="loading" [(ngModel)]="email"
+	<mat-label>{{ fieldLabels[field] }}</mat-label>
+	<input matInput
+		[disabled]="loading" [(ngModel)]="input"
 		(keypress)="onKeyPress($event)">
 	<!-- <mat-icon matPrefix>search</mat-icon> -->
 </mat-form-field>
-<button mat-icon-button mat-color="basic"
-	[disabled]="loading" (click)="search(email)">
+&nbsp;
+<button *ngIf="!loading" mat-icon-button mat-color="basic"
+	[disabled]="loading" (click)="search()">
 	<mat-icon matSuffix>search</mat-icon>
 </button>
+<mat-spinner *ngIf="loading" diameter="36" color="accent"
+	style="display: inline-block; vertical-align: middle"></mat-spinner>

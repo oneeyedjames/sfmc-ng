@@ -11,24 +11,22 @@ export class ApiService {
 
 	constructor(private http: HttpClient) {}
 
-	getSubscriber(email: string) {
-		return this.get('subscriber/complete', { email });
+	getSubscriber(input: string, field = 'email') {
+		return this.get('subscriber/complete', this.getParams(input, field));
 	}
 
-	getSubscriberLists(email: string) {
-		return this.get('subscriber/lists', { email });
-	}
-
-	getSubscriberEvents(email: string) {
-		return this.get('subscriber/events', { email });
-	}
-
-	getContact(email: string) {
-		return this.get('contact/subscriptions', { email });
+	getContact(input: string, field = 'email') {
+		return this.get('contact/subscriptions', this.getParams(input, field));
 	}
 
 	private async get(path: string, params: Params) {
 		return await this.http.get<Array<object>>(`${this.baseUrl}/${path}`,
 			{ params, observe: 'body' }).toPromise();
+	}
+
+	private getParams(value: string, key: string) {
+		const params = {} as { [key: string]: string };
+		params[key] = value;
+		return params;
 	}
 }

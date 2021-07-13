@@ -14,9 +14,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -36,9 +38,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatListModule,
 		MatMenuModule,
 		MatTabsModule,
-		MatFormFieldModule,
 		MatInputModule,
+		MatRadioModule,
+		MatSelectModule,
 		MatCheckboxModule,
+		MatFormFieldModule,
 		MatProgressSpinnerModule,
 		MatExpansionModule,
 		MatSnackBarModule

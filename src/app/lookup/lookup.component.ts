@@ -11,15 +11,22 @@ import { LookupService } from './lookup.service';
 	// styleUrls: ['./lookup.component.scss']
 })
 export class LookupComponent {
-	email = 'ascott@rbc.org';
+	input = '';
+	field = 'email';
+
+	fieldLabels = {
+		key: 'Subscriber Key',
+		email: 'Email Address'
+	} as { [key: string]: string }
+
 	loading = false;
 
 	@Output('loaded')
 	loaded = new EventEmitter<object[]>();
 
-	// private get contacts() {
-	// 	return this.svc.contacts as Subject<object[]>;
-	// }
+	private get contacts() {
+		return this.svc.contacts as Subject<object[]>;
+	}
 
 	private get subscribers() {
 		return this.svc.subscribers as Subject<object[]>;
@@ -90,15 +97,15 @@ export class LookupComponent {
 		// });
 	}
 
-	search(email: string) {
+	search() {
 		this.next();
 		this.loading = true;
 
-		this.api.getContact(email)
+		this.api.getContact(this.input, this.field)
 		.then(result => this.contacts.next(result))
 		.catch(err => console.error(err));
 
-		this.api.getSubscriber(email)
+		this.api.getSubscriber(this.input, this.field)
 		.then(result => {
 			this.loading = false;
 			this.next(result);
@@ -110,8 +117,7 @@ export class LookupComponent {
 	}
 
 	onKeyPress(event: KeyboardEvent) {
-		if (event.keyCode == 13)
-			this.search(this.email);
+		if (event.keyCode == 13) this.search();
 	}
 
 	protected next(data: object[] = []) {
