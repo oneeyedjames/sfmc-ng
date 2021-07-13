@@ -25,56 +25,78 @@ export class LookupComponent {
 		return this.svc.subscribers as Subject<object[]>;
 	}
 
-	constructor(private svc: LookupService, private api: ApiService) {}
+	constructor(private svc: LookupService, private api: ApiService) {
+		// combineLatest([
+		// 	svc.contacts,
+		// 	svc.subscribers
+		// ]).subscribe(([cons, subs]) => {
+		// 	const customers: {[id:string]:any} = {};
+		// 	const subscriptions: {[id:string]:any} = {};
+		//
+		// 	cons.forEach((con: any) => {
+		// 		customers[con.Id] = {
+		// 			Id: con.Id,
+		// 			Name: con.Name,
+		// 			Email: { SalesCloud: con.Email },
+		// 			Status: { SalesCloud: con.Status },
+		// 			Subscriptions: {}
+		// 		}
+		//
+		// 		con.Subscriptions.forEach((sub: any) => {
+		// 			const key = `${sub.ContactId}:${sub.GlobalProductCode}`;
+		// 			customers[con.Id].Subscriptions[key] = subscriptions[key] = {
+		// 				ContactId: sub.ContactId,
+		// 				ProductCode: sub.GlobalProductCode,
+		// 				Status: { SalesCloud: sub.Status },
+		// 				InactiveReason: { SalesCloud: sub.InactiveReason }
+		// 			};
+		// 		});
+		// 	});
+		//
+		// 	subs.forEach((sub: any) => {
+		// 		const cust = customers[sub.SubscriberKey] || {
+		// 			Id: sub.SubscriberKey,
+		// 			Email: { SalesCloud: undefined },
+		// 			Status: { SalesCloud: undefined },
+		// 			Subscriptions: {}
+		// 		};
+		//
+		// 		cust.Email.MarketingCloud = sub.EmailAddress;
+		// 		cust.Status.MarketingCloud = sub.Status;
+		//
+		// 		customers[sub.SubscriberKey] = cust;
+		//
+		// 		sub.Lists.forEach((listSub: any) => {
+		// 			if (listSub.ListClassification == 'PublicationList') {
+		// 				const subKey = sub.SubscriberKey as string;
+		// 				const key = `${subKey}:${listSub.ListCode}`;
+		//
+		// 				const custSub = subscriptions[key] || {
+		// 					ContactId: subKey,
+		// 					ProductCode: listSub.ListCode,
+		// 					Status: { SalesCloud: undefined },
+		// 					InactiveReason: { SalesCloud: undefined }
+		// 				};
+		//
+		// 				custSub.Status.MarketingCloud = listSub.Status;
+		// 				custSub.InactiveReason.MarketingCloud = listSub.InactiveReason;
+		//
+		// 				customers[subKey].Subscriptions[key] = subscriptions[key] = custSub;
+		// 			}
+		// 		});
+		// 	});
+		//
+		// 	console.log(customers);
+		// });
+	}
 
 	search(email: string) {
 		this.next();
 		this.loading = true;
 
-		// Promise.all([
-		// 	this.api.getContact(email),
-		// 	this.api.getSubscriber(email)
-		// ]).then(([cons, subs]) => {
-		// 	const customers: {[key:string]:object} = {};
-		// 	const subscriptions: {[key:string]:object} = {};
-		//
-		// 	cons.forEach((con: any) => {
-		// 		customers[con.Id] = {
-		// 			...con,
-		// 			Status: {
-		// 				SalesCloud: con.Status
-		// 			}
-		// 		};
-		//
-		// 		con.Subscriptions.forEach((sub: any) => {
-		// 			console.log(sub);
-		// 			const key = [
-		// 				sub.ContactId,
-		// 				sub.GlobalProductCode
-		// 			].join('-');
-		//
-		// 			subscriptions[key] = sub;
-		// 		});
-		// 	});
-		//
-		// 	subs.forEach((sub: any) => {
-		// 		const subKey = sub.SubscriberKey as string;
-		// 		const con = customers[subKey] as any;
-		//
-		// 		customers[subKey] = {
-		// 			...con,
-		// 			Id: subKey,
-		// 			Email: sub.EmailAddress,
-		// 			Status: {
-		// 				...con.Status,
-		// 				MarketingCloud: sub.Status
-		// 			},
-		// 			CreatedDate: sub.CreatedDate
-		// 		};
-		// 	});
-		//
-		// 	console.log(customers);
-		// }, console.error);
+		this.api.getContact(email)
+		.then(result => this.contacts.next(result))
+		.catch(err => console.error(err));
 
 		this.api.getSubscriber(email)
 		.then(result => {
@@ -85,6 +107,11 @@ export class LookupComponent {
 			this.loading = false;
 			this.subscribers.error(err);
 		});
+	}
+
+	onKeyPress(event: KeyboardEvent) {
+		if (event.keyCode == 13)
+			this.search(this.email);
 	}
 
 	protected next(data: object[] = []) {

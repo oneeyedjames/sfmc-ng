@@ -3,7 +3,8 @@
 &nbsp;
 <mat-form-field appearance="standard">
 	<input matInput placeholder="Email Address"
-		[disabled]="loading" [(ngModel)]="email">
+		[disabled]="loading" [(ngModel)]="email"
+		(keypress)="onKeyPress($event)">
 	<!-- <mat-icon matPrefix>search</mat-icon> -->
 </mat-form-field>
 <button mat-icon-button mat-color="basic"
