@@ -10,6 +10,6 @@ export class EventDialogComponent {
 	constructor(@Inject(MAT_DIALOG_DATA) public event: any) {}
 
 	get hasMoreInfo() {
-		return ['Bounce', 'Click', 'Unsub'].includes(this.event.EventType);
+		return ['Bounce', 'Click', 'Unsubscribe'].includes(this.event.EventType);
 	}
 }

@@ -16,6 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -37,6 +38,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatTabsModule,
 		MatFormFieldModule,
 		MatInputModule,
+		MatCheckboxModule,
 		MatProgressSpinnerModule,
 		MatExpansionModule,
 		MatSnackBarModule

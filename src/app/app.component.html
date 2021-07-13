@@ -14,12 +14,15 @@
 			<p><strong>Email:</strong> {{ sub.EmailAddress }}</p>
 			<p><strong>Status:</strong> {{ sub.Status }}</p>
 			<p><strong>Created:</strong> {{ sub.CreatedDate }}</p>
-			<p *ngIf="sub.UnsubscribedDate"><strong>Unsubscribed:</strong> {{ sub.UnsubscribedDate }}</p>
+			<p *ngIf="sub.UnsubscribedDate">
+				<strong>Unsubscribed:</strong>
+				{{ sub.UnsubscribedDate }}
+			</p>
 			<mat-tab-group mat-align-tabs="center">
-				<mat-tab label="Lists">
+				<mat-tab label="Subscriptions">
 					<list-table [lists]="sub.Lists"></list-table>
 				</mat-tab>
-				<mat-tab label="Events">
+				<mat-tab label="History">
 					<event-table [events]="sub.Events"></event-table>
 				</mat-tab>
 			</mat-tab-group>
