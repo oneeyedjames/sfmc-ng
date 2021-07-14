@@ -8,7 +8,7 @@ import { AppMaterialModule } from './app-material.module';
 import { AppComponent } from './app.component';
 
 import { NavbarModule } from './navbar/navbar.module';
-import { LookupModule } from './lookup/lookup.module';
+import { SearchModule } from './search/search.module';
 import { ListModule } from './list/list.module';
 import { EventModule } from './event/event.module';
 
@@ -20,7 +20,7 @@ import { EventModule } from './event/event.module';
 		AppRoutingModule,
 		AppMaterialModule,
 		NavbarModule,
-		LookupModule,
+		SearchModule,
 		ListModule,
 		EventModule
 	],

@@ -3,14 +3,14 @@ import { Subject } from 'rxjs';
 
 import { ApiService } from '../api.service';
 
-import { LookupService } from './lookup.service';
+import { SearchService } from './search.service';
 
 @Component({
-	selector: 'lookup-form',
-	templateUrl: './lookup.component.html',
-	// styleUrls: ['./lookup.component.scss']
+	selector: 'search-form',
+	templateUrl: './search.component.html',
+	// styleUrls: ['./search$1component.scss']
 })
-export class LookupComponent {
+export class SearchComponent {
 	input = '';
 	field = 'email';
 
@@ -32,7 +32,7 @@ export class LookupComponent {
 		return this.svc.subscribers as Subject<object[]>;
 	}
 
-	constructor(private svc: LookupService, private api: ApiService) {
+	constructor(private svc: SearchService, private api: ApiService) {
 		// combineLatest([
 		// 	svc.contacts,
 		// 	svc.subscribers
@@ -121,7 +121,6 @@ export class LookupComponent {
 	}
 
 	protected next(data: object[] = []) {
-		console.log('SUBSCRIBERS', data);
 		this.loaded.emit(data);
 		this.subscribers.next(data);
 	}

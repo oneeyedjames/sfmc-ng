@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class LookupService {
+export class SearchService {
 	private contactSubj = new Subject<object[]>();
 	private subscriberSubj = new Subject<object[]>();
 

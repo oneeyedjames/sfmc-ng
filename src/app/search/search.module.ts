@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from '../app-material.module';
 
-import { LookupComponent } from './lookup.component';
-export { LookupComponent } from './lookup.component';
+import { SearchComponent } from './search.component';
+export { SearchComponent } from './search.component';
 
-export { LookupService } from './lookup.service';
+export { SearchService } from './search.service';
+
 
 @NgModule({
 	imports: [
@@ -16,10 +17,10 @@ export { LookupService } from './lookup.service';
 		FormsModule
 	],
 	exports: [
-		LookupComponent
+		SearchComponent
 	],
 	declarations: [
-		LookupComponent
+		SearchComponent
 	]
 })
-export class LookupModule {}
+export class SearchModule {}

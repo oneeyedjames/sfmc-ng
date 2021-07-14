@@ -1,6 +1,6 @@
 <mat-form-field appearance="standard">
 	<mat-label>Search By</mat-label>
-	<mat-select [(ngModel)]="field" (change)="input = ''">
+	<mat-select [(ngModel)]="field" [disabled]="loading">
 		<mat-option value="key">Subscriber Key</mat-option>
 		<mat-option value="email">Email Address</mat-option>
 	</mat-select>

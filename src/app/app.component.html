@@ -1,6 +1,6 @@
 <navbar [title]="title" (click)="onClick($event)"></navbar>
 <div class="wrapper">
-	<lookup-form></lookup-form>
+	<search-form></search-form>
 	<p *ngIf="subs.length == 0" class="alert">No Results Found</p>
 	<mat-accordion>
 		<mat-expansion-panel *ngFor="let sub of subs">

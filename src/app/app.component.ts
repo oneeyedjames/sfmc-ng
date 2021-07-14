@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ClickType } from './navbar/navbar.module';
-import { LookupService } from './lookup/lookup.module';
+import { SearchService } from './search/search.module';
 
 @Component({
 	selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	sub?: Subscription;
 
 	constructor(
-		private svc: LookupService,
+		private svc: SearchService,
 		// private snackBar: MatSnackBar
 	) {}
 
