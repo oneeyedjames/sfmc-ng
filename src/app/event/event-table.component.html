@@ -1,6 +1,13 @@
-<strong>Event Types:</strong>
-<mat-checkbox [checked]="isTypeActive(type)" (change)="toggleType(type)"
-	*ngFor="let type of allEventTypes">{{ type }}</mat-checkbox>
+<div>
+	<strong>Lists:</strong>
+	<mat-checkbox [checked]="isListActive(list.Id)" (change)="toggleList(list.Id)"
+		*ngFor="let list of allLists">{{ list.Name }}</mat-checkbox>
+</div>
+<div>
+	<strong>Events:</strong>
+	<mat-checkbox [checked]="isTypeActive(type)" (change)="toggleType(type)"
+		*ngFor="let type of allTypes">{{ type }}</mat-checkbox>
+</div>
 <table mat-table multiTemplateDataRows [dataSource]="filteredEvents">
 	<ng-container matColumnDef="EventDate">
 		<th mat-header-cell *matHeaderCellDef>Event Date</th>
