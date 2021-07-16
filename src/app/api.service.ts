@@ -8,6 +8,7 @@ type Params = {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 	private baseUrl = 'http://localhost:3000/api';
+	private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjQ1Njc4OTAiLCJpc3MiOiJTZXJ2TUMiLCJhdWQiOiJTRk1DIFZpZXdlciIsImlhdCI6MTYyNjM3NDI2MX0.Fmcn3p-lOHgrXsWu5WFEjO3hM3dG5OvfJmzMQPw-XFY';
 
 	constructor(private http: HttpClient) {}
 
@@ -20,8 +21,10 @@ export class ApiService {
 	}
 
 	private async get(path: string, params: Params) {
-		return await this.http.get<Array<object>>(`${this.baseUrl}/${path}`,
-			{ params, observe: 'body' }).toPromise();
+		return await this.http.get<Array<object>>(`${this.baseUrl}/${path}`, {
+			params, observe: 'body',
+			headers: { Authorization: `Bearer ${this.token}` }
+		}).toPromise();
 	}
 
 	private getParams(value: string, key: string) {
