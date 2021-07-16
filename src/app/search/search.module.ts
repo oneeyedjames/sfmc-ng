@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from '../app-material.module';
 
@@ -14,7 +14,8 @@ export { SearchService } from './search.service';
 	imports: [
 		AppMaterialModule,
 		BrowserModule,
-		FormsModule
+		FormsModule,
+		ReactiveFormsModule
 	],
 	exports: [
 		SearchComponent

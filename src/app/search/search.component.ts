@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
+import { Subject, combineLatest } from 'rxjs';
 
 import { ApiService } from '../api.service';
 
@@ -8,18 +9,16 @@ import { SearchService } from './search.service';
 @Component({
 	selector: 'search-form',
 	templateUrl: './search.component.html',
-	// styleUrls: ['./search$1component.scss']
+	// styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
-	input = '';
-	field = 'email';
-
 	fieldLabels = {
 		key: 'Subscriber Key',
 		email: 'Email Address'
 	} as { [key: string]: string }
 
-	loading = false;
+	fieldCtrl = new FormControl('email');
+	inputCtrl = new FormControl('', [Validators.required]);
 
 	@Output('loaded')
 	loaded = new EventEmitter<object[]>();
@@ -98,22 +97,29 @@ export class SearchComponent {
 	}
 
 	search() {
-		this.next();
-		this.loading = true;
+		this.inputCtrl.markAsTouched();
+		if (this.inputCtrl.invalid) return;
 
-		this.api.getContact(this.input, this.field)
+		this.next();
+		this.fieldCtrl.disable();
+		this.inputCtrl.disable();
+
+		this.api.getContact(this.inputCtrl.value, this.fieldCtrl.value)
 		.then(result => this.contacts.next(result))
 		.catch(err => console.error(err));
 
-		this.api.getSubscriber(this.input, this.field)
-		.then(result => {
-			this.loading = false;
-			this.next(result);
-		})
-		.catch(err => {
-			this.loading = false;
-			this.subscribers.error(err);
+		this.api.getSubscriber(this.inputCtrl.value, this.fieldCtrl.value)
+		.then(result => this.next(result))
+		.catch(err => this.subscribers.error(err))
+		.finally(() => {
+			this.fieldCtrl.enable();
+			this.inputCtrl.enable();
 		});
+	}
+
+	reset() {
+		this.inputCtrl.reset();
+		this.next();
 	}
 
 	onKeyPress(event: KeyboardEvent) {

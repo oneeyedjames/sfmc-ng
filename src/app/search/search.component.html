@@ -1,22 +1,26 @@
 <mat-form-field appearance="standard">
 	<mat-label>Search By</mat-label>
-	<mat-select [(ngModel)]="field" [disabled]="loading">
+	<mat-select [formControl]="fieldCtrl">
 		<mat-option value="key">Subscriber Key</mat-option>
 		<mat-option value="email">Email Address</mat-option>
 	</mat-select>
 </mat-form-field>
 &nbsp;
 <mat-form-field appearance="standard">
-	<mat-label>{{ fieldLabels[field] }}</mat-label>
-	<input matInput
-		[disabled]="loading" [(ngModel)]="input"
+	<mat-label>{{ fieldLabels[fieldCtrl.value] }}</mat-label>
+	<input matInput required [formControl]="inputCtrl"
 		(keypress)="onKeyPress($event)">
-	<!-- <mat-icon matPrefix>search</mat-icon> -->
+	<mat-error *ngIf="inputCtrl.invalid">Input is required</mat-error>
 </mat-form-field>
 &nbsp;
-<button *ngIf="!loading" mat-icon-button mat-color="basic"
-	[disabled]="loading" (click)="search()">
+<button mat-icon-button color="primary"
+	[disabled]="inputCtrl.disabled" (click)="search()">
 	<mat-icon matSuffix>search</mat-icon>
 </button>
-<mat-spinner *ngIf="loading" diameter="36" color="accent"
+<button mat-icon-button color="warn"
+	[disabled]="inputCtrl.disabled" (click)="reset()">
+	<mat-icon matSuffix>clear</mat-icon>
+</button>
+&nbsp;
+<mat-spinner *ngIf="inputCtrl.disabled" diameter="36" color="accent"
 	style="display: inline-block; vertical-align: middle"></mat-spinner>
