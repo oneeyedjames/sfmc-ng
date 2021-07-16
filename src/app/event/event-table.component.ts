@@ -24,7 +24,7 @@ export class EventTableComponent {
 	constructor(public dialog: MatDialog) {}
 
 	hasMoreInfo(event: any) {
-		return ['Bounce', 'Click', 'Unsubscribe'].includes(event.EventType);
+		return !['Open', 'Sent'].includes(event.EventType);
 	}
 
 	isTypeActive(type: string) {

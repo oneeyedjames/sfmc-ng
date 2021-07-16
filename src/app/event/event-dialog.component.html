@@ -14,7 +14,11 @@
 	<p *ngIf="hasMoreInfo">
 		<mat-divider></mat-divider>
 	</p>
-	<div *ngIf="event.EventType == 'Bounce'">
+	<div *ngIf="isClick">
+		<h2>URL</h2>
+		<p>{{ event.URL }}</p>
+	</div>
+	<div *ngIf="isBounce">
 		<h2>Bounce Category</h2>
 		<p>{{ event.BounceCategory }}</p>
 		<h2>Bounce Type</h2>
@@ -24,11 +28,7 @@
 		<h2>SMTP Reason</h2>
 		<p>{{ event.SMTPReason }}</p>
 	</div>
-	<div *ngIf="event.EventType == 'Click'">
-		<h2>URL</h2>
-		<p>{{ event.URL }}</p>
-	</div>
-	<div *ngIf="event.EventType == 'Unsubscribe'">
+	<div *ngIf="isUnsub">
 		<h2>Master Unsubscribed</h2>
 		<p>{{ event.IsMasterUnsubscribed }}</p>
 	</div>

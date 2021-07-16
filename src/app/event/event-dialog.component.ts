@@ -10,6 +10,18 @@ export class EventDialogComponent {
 	constructor(@Inject(MAT_DIALOG_DATA) public event: any) {}
 
 	get hasMoreInfo() {
-		return ['Bounce', 'Click', 'Unsubscribe'].includes(this.event.EventType);
+		return this.isClick || this.isBounce || this.isUnsub;
+	}
+
+	get isClick() {
+		return this.event.URL !== undefined;
+	}
+
+	get isBounce() {
+		return this.event.BounceCategory !== undefined;
+	}
+
+	get isUnsub() {
+		return this.event.IsMasterUnsubscribed !== undefined;
 	}
 }
