@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from './app-routing.module';
+// import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material.module';
 import { AppComponent } from './app.component';
 
@@ -15,7 +15,7 @@ import { SearchModule } from './search/search.module';
 		HttpClientModule,
 		BrowserModule,
 		BrowserAnimationsModule,
-		AppRoutingModule,
+		// AppRoutingModule,
 		AppMaterialModule,
 		NavbarModule,
 		SearchModule
