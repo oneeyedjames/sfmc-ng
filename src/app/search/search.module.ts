@@ -3,25 +3,32 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from '../app-material.module';
+import { SubscriberModule } from '../subscriber/subscriber.module';
 
-import { SearchComponent } from './search.component';
-export { SearchComponent } from './search.component';
+import { SearchFormComponent } from './search-form.component';
+export { SearchFormComponent } from './search-form.component';
+
+import { SearchResultsComponent } from './search-results.component';
+export { SearchResultsComponent } from './search-results.component';
 
 export { SearchService } from './search.service';
 
 
 @NgModule({
 	imports: [
-		AppMaterialModule,
 		BrowserModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		AppMaterialModule,
+		SubscriberModule
 	],
 	exports: [
-		SearchComponent
+		SearchFormComponent,
+		SearchResultsComponent
 	],
 	declarations: [
-		SearchComponent
+		SearchFormComponent,
+		SearchResultsComponent
 	]
 })
 export class SearchModule {}

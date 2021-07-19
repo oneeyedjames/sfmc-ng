@@ -1,0 +1,13 @@
+<mat-accordion *ngIf="results && results.length > 0">
+	<mat-expansion-panel *ngFor="let sub of results">
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				<code>{{ sub.SubscriberKey }}</code>
+			</mat-panel-title>
+			<mat-panel-description>
+				{{ sub.EmailAddress }}
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+		<subscriber [subscriber]="sub"></subscriber>
+	</mat-expansion-panel>
+</mat-accordion>

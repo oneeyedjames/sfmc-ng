@@ -8,10 +8,9 @@ import { SearchService } from './search.service';
 
 @Component({
 	selector: 'search-form',
-	templateUrl: './search.component.html',
-	// styleUrls: ['./search.component.scss']
+	templateUrl: './search-form.component.html'
 })
-export class SearchComponent {
+export class SearchFormComponent {
 	fieldLabels = {
 		key: 'Subscriber Key',
 		email: 'Email Address'
@@ -105,8 +104,10 @@ export class SearchComponent {
 		this.inputCtrl.disable();
 
 		this.api.getContact(this.inputCtrl.value, this.fieldCtrl.value)
-		.then(result => this.contacts.next(result))
-		.catch(err => console.error(err));
+		.then(result => {
+			console.log(result);
+			this.contacts.next(result);
+		}).catch(err => console.error(err));
 
 		this.api.getSubscriber(this.inputCtrl.value, this.fieldCtrl.value)
 		.then(result => this.next(result))

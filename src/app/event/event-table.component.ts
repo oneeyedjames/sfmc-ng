@@ -72,8 +72,6 @@ export class EventTableComponent {
 		const index = this.lists.indexOf(listId);
 		if (index < 0) this.lists.push(listId);
 		else this.lists.splice(index, 1);
-
-		console.log(this.lists);
 	}
 
 	toggleType(type: string) {

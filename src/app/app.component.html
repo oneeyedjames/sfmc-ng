@@ -1,33 +1,6 @@
 <navbar [title]="title" (click)="onClick($event)"></navbar>
 <div class="wrapper">
 	<search-form></search-form>
-	<p *ngIf="subs.length == 0" class="alert">No Results Found</p>
-	<mat-accordion>
-		<mat-expansion-panel *ngFor="let sub of subs">
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					<code>{{ sub.SubscriberKey }}</code>
-				</mat-panel-title>
-				<mat-panel-description>
-					{{ sub.EmailAddress }}
-				</mat-panel-description>
-			</mat-expansion-panel-header>
-			<p><strong>Email:</strong> {{ sub.EmailAddress }}</p>
-			<p><strong>Status:</strong> {{ sub.Status }}</p>
-			<p><strong>Created:</strong> {{ sub.CreatedDate }}</p>
-			<p *ngIf="sub.UnsubscribedDate">
-				<strong>Unsubscribed:</strong>
-				{{ sub.UnsubscribedDate }}
-			</p>
-			<mat-tab-group mat-align-tabs="center">
-				<mat-tab label="Subscriptions">
-					<list-table [lists]="sub.Lists"></list-table>
-				</mat-tab>
-				<mat-tab label="History">
-					<event-table [events]="sub.Events"></event-table>
-				</mat-tab>
-			</mat-tab-group>
-		</mat-expansion-panel>
-	</mat-accordion>
+	<search-results [results]="subs"></search-results>
 	<router-outlet></router-outlet>
 </div>

@@ -1,0 +1,17 @@
+<div *ngIf="subscriber != null">
+	<p><strong>Email:</strong> {{ subscriber.EmailAddress }}</p>
+	<p><strong>Status:</strong> {{ subscriber.Status }}</p>
+	<p><strong>Created:</strong> {{ subscriber.CreatedDate }}</p>
+	<p *ngIf="subscriber.UnsubscribedDate">
+		<strong>Unsubscribed:</strong>
+		{{ subscriber.UnsubscribedDate }}
+	</p>
+	<mat-tab-group mat-align-tabs="center">
+		<mat-tab label="Subscriptions">
+			<list-table [lists]="subscriber.Lists"></list-table>
+		</mat-tab>
+		<mat-tab label="History">
+			<event-table [events]="subscriber.Events"></event-table>
+		</mat-tab>
+	</mat-tab-group>
+</div>
