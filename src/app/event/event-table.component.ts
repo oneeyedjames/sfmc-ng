@@ -28,7 +28,9 @@ export class EventTableComponent {
 		});
 
 		this.allLists = Array.from(listMap.entries()).map(entry =>
-			({ Id: entry[0], Name: entry[1] }));
+			({ Id: entry[0], Name: entry[1] })).sort((l1: any, l2: any) => {
+			return (l1.Name as string).localeCompare(l2.Name);
+		})
 
 		this.lists = Array.from(listMap.keys());
 
