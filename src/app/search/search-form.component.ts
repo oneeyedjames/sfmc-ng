@@ -19,8 +19,8 @@ export class SearchFormComponent {
 	fieldCtrl = new FormControl('email');
 	inputCtrl = new FormControl('', [Validators.required]);
 
-	@Output('loaded')
-	loaded = new EventEmitter<object[]>();
+	@Output('results')
+	results = new EventEmitter<object[]>();
 
 	private get contacts() {
 		return this.svc.contacts as Subject<object[]>;
@@ -104,10 +104,7 @@ export class SearchFormComponent {
 		this.inputCtrl.disable();
 
 		this.api.getContact(this.inputCtrl.value, this.fieldCtrl.value)
-		.then(result => {
-			console.log(result);
-			this.contacts.next(result);
-		}).catch(err => console.error(err));
+		.then(console.log, console.error);
 
 		this.api.getSubscriber(this.inputCtrl.value, this.fieldCtrl.value)
 		.then(result => this.next(result))
@@ -128,7 +125,11 @@ export class SearchFormComponent {
 	}
 
 	protected next(data: object[] = []) {
-		this.loaded.emit(data);
+		data.forEach((sub: any) => sub.Events.sort((e1: any, e2: any) => {
+			return Date.parse(e2.EventDate) - Date.parse(e1.EventDate);
+		}));
+
+		this.results.emit(data);
 		this.subscribers.next(data);
 	}
 }
