@@ -18,7 +18,7 @@
 	<mat-icon matSuffix>search</mat-icon>
 </button>
 <button mat-icon-button color="warn"
-	[disabled]="inputCtrl.disabled" (click)="reset()">
+	[disabled]="inputCtrl.disabled || results.length == 0" (click)="reset()">
 	<mat-icon matSuffix>clear</mat-icon>
 </button>
 &nbsp;

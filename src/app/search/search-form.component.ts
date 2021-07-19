@@ -20,7 +20,8 @@ export class SearchFormComponent {
 	inputCtrl = new FormControl('', [Validators.required]);
 
 	@Output('results')
-	results = new EventEmitter<object[]>();
+	resultsEvent = new EventEmitter<object[]>();
+	results = [] as object[];
 
 	private get contacts() {
 		return this.svc.contacts as Subject<object[]>;
@@ -108,7 +109,7 @@ export class SearchFormComponent {
 
 		this.api.getSubscriber(this.inputCtrl.value, this.fieldCtrl.value)
 		.then(result => this.next(result))
-		.catch(err => this.subscribers.error(err))
+		.catch(err => console.error(err))
 		.finally(() => {
 			this.fieldCtrl.enable();
 			this.inputCtrl.enable();
@@ -129,7 +130,7 @@ export class SearchFormComponent {
 			return Date.parse(e2.EventDate) - Date.parse(e1.EventDate);
 		}));
 
-		this.results.emit(data);
-		this.subscribers.next(data);
+		this.resultsEvent.emit(this.results = data);
+		// this.subscribers.next(data);
 	}
 }
