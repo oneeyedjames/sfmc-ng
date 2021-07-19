@@ -1,10 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Subject, combineLatest } from 'rxjs';
 
 import { ApiService } from '../api.service';
-
-import { SearchService } from './search.service';
 
 @Component({
 	selector: 'search-form',
@@ -23,15 +20,7 @@ export class SearchFormComponent {
 	resultsEvent = new EventEmitter<object[]>();
 	results = [] as object[];
 
-	private get contacts() {
-		return this.svc.contacts as Subject<object[]>;
-	}
-
-	private get subscribers() {
-		return this.svc.subscribers as Subject<object[]>;
-	}
-
-	constructor(private svc: SearchService, private api: ApiService) {
+	constructor(private api: ApiService) {
 		// combineLatest([
 		// 	svc.contacts,
 		// 	svc.subscribers
@@ -131,6 +120,5 @@ export class SearchFormComponent {
 		}));
 
 		this.resultsEvent.emit(this.results = data);
-		// this.subscribers.next(data);
 	}
 }
