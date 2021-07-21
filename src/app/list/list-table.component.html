@@ -6,11 +6,8 @@
 
 	<ng-container matColumnDef="ListName">
 		<th mat-header-cell *matHeaderCellDef>List Name</th>
-		<td mat-cell *matCellDef="let list">
-			<span [matTooltip]="list.ListName">
-				{{ list.ListCode || list.ListName }}
-				<mat-icon>info</mat-icon>
-			</span>
+		<td mat-cell *matCellDef="let list" [matTooltip]="list.ListName">
+			<span class="highlight">{{ list.ListCode || list.ListName }}</span>
 		</td>
 	</ng-container>
 

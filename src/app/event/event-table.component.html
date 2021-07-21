@@ -9,9 +9,16 @@
 		*ngFor="let type of allTypes">{{ type }}</mat-checkbox>
 </div>
 <table mat-table multiTemplateDataRows [dataSource]="filteredEvents">
-	<ng-container matColumnDef="EventDate">
-		<th mat-header-cell *matHeaderCellDef>Event Date</th>
-		<td mat-cell *matCellDef="let event">{{ event.EventDate }}</td>
+	<ng-container matColumnDef="ListID">
+		<th mat-header-cell *matHeaderCellDef>List ID</th>
+		<td mat-cell *matCellDef="let event">{{ event.ListID }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="ListName">
+		<th mat-header-cell *matHeaderCellDef>List Name</th>
+		<td mat-cell *matCellDef="let event" [matTooltip]="event.ListName">
+			<span class="highlight">{{ event.ListCode }}</span>
+		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="EventType">
@@ -22,9 +29,9 @@
 		</td>
 	</ng-container>
 
-	<ng-container matColumnDef="ListName">
-		<th mat-header-cell *matHeaderCellDef>List Name</th>
-		<td mat-cell *matCellDef="let event">{{ event.ListName }}</td>
+	<ng-container matColumnDef="EventDate">
+		<th mat-header-cell *matHeaderCellDef>Event Date</th>
+		<td mat-cell *matCellDef="let event">{{ event.EventDate }}</td>
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="cols"></tr>

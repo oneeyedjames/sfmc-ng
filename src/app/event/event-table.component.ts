@@ -21,10 +21,10 @@ export class EventTableComponent {
 
 		events.forEach(event => {
 			const name = event.ListName as string;
-			const keys = name.match(/^(.+) - .+$/i);
-			const code = keys ? keys[1] : name;
+			const keys = name.match(/^(.+) - (.+)$/i);
+			event.ListCode = keys ? keys[1] : name;
 
-			listMap.set(event.ListID, code);
+			listMap.set(event.ListID, event.ListCode);
 		});
 
 		this.allLists = Array.from(listMap.entries()).map(entry =>
@@ -47,7 +47,7 @@ export class EventTableComponent {
 	allTypes: string[] = [];
 	// ['HardBounce', 'Click', 'Open', 'Sent', 'Unsubscribe'];
 
-	cols = ['EventDate', 'EventType', 'ListName'];
+	cols = ['ListID', 'ListName', 'EventType', 'EventDate'];
 
 	get filteredEvents() {
 		return this.events.filter(event => {
