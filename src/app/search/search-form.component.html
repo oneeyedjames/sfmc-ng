@@ -1,3 +1,5 @@
+<h1 style="display: inline">Subscriber Search</h1>
+&nbsp;
 <mat-form-field appearance="standard">
 	<mat-label>Search By</mat-label>
 	<mat-select [formControl]="fieldCtrl">
@@ -13,13 +15,16 @@
 	<mat-error *ngIf="inputCtrl.invalid">Input is required</mat-error>
 </mat-form-field>
 &nbsp;
-<button mat-icon-button color="primary"
+<button mat-flat-button color="primary"
 	[disabled]="inputCtrl.disabled" (click)="search()">
 	<mat-icon matSuffix>search</mat-icon>
+	Search
 </button>
-<button mat-icon-button color="warn"
+&nbsp;
+<button mat-flat-button color="warn"
 	[disabled]="inputCtrl.disabled || results.length == 0" (click)="reset()">
 	<mat-icon matSuffix>clear</mat-icon>
+	Clear
 </button>
 &nbsp;
 <mat-spinner *ngIf="inputCtrl.disabled" diameter="36" color="accent"

@@ -1,6 +1,7 @@
 <navbar [title]="title" (click)="onClick($event)"></navbar>
 <div class="wrapper">
 	<search-form (results)="subscribers = $event"></search-form>
+	<mat-divider></mat-divider>
 	<search-results [results]="subscribers"></search-results>
 	<!-- <router-outlet></router-outlet> -->
 </div>

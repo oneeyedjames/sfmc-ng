@@ -1,0 +1,52 @@
+@import '../../theme';
+
+.mat-checkbox { margin: 8px; }
+
+table {
+	width: 100%;
+
+	.mat-icon {
+		width: 14px;
+		height: 14px;
+		font-size: 14px;
+	}
+
+	.empty-row {
+		height: 0px;
+	}
+
+	.mat-row {
+		cursor: pointer;
+	}
+
+	.mat-row:hover {
+		background: mat-color(map_get($app-theme, accent), 50);
+	}
+
+	.mat-row.selected {
+		background: mat-color(map_get($app-theme, accent), 100);
+	}
+}
+
+mat-icon.large {
+	width: 40px;
+	height: 40px;
+	font-size: 40px;
+	line-height: 40px;
+}
+
+.layout {
+	display: flex;
+	justify-content: space-between;
+	align-content: stretch;
+
+	.list {
+		flex-grow: 1;
+		flex-shrink: 1;
+	}
+
+	.item {
+		flex-grow: 3;
+		flex-shrink: 0;
+	}
+}

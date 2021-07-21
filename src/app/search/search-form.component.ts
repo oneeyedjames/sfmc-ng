@@ -5,7 +5,8 @@ import { ApiService } from '../api.service';
 
 @Component({
 	selector: 'search-form',
-	templateUrl: './search-form.component.html'
+	templateUrl: './search-form.component.html',
+	styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent {
 	fieldLabels = {
