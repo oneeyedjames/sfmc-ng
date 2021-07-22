@@ -23,7 +23,7 @@ export class ApiService {
 	private async get(path: string, params: Params) {
 		return await this.http.get<Array<object>>(`${this.baseUrl}/${path}`, {
 			params, observe: 'body',
-			headers: { Authorization: `Bearer ${this.token}` }
+			headers: { Authorization: `JWT ${this.token}` }
 		}).toPromise();
 	}
 
