@@ -11,10 +11,6 @@ table {
 		font-size: 14px;
 	}
 
-	.empty-row {
-		height: 0px;
-	}
-
 	.mat-row {
 		cursor: pointer;
 	}
@@ -26,13 +22,6 @@ table {
 	.mat-row.selected {
 		background: mat-color(map_get($app-theme, accent), 100);
 	}
-}
-
-mat-icon.large {
-	width: 40px;
-	height: 40px;
-	font-size: 40px;
-	line-height: 40px;
 }
 
 .layout {

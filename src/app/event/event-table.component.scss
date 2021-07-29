@@ -9,11 +9,7 @@ table {
 		font-size: 14px;
 	}
 
-	.empty-row {
-		height: 0px;
-	}
-
-	tr:hover {
+	.mat-row:hover {
 		background: whitesmoke;
 		cursor: pointer;
 	}

@@ -3,7 +3,16 @@
 		<table mat-table [dataSource]="results" *ngIf="results">
 			<ng-container matColumnDef="SubscriberKey">
 				<th mat-header-cell *matHeaderCellDef>Subscriber Key</th>
-				<td mat-cell *matCellDef="let sub">{{ sub.SubscriberKey }}</td>
+				<td mat-cell *matCellDef="let sub">
+					<div *ngIf="!!subscriber">{{ getTitle(sub) }}</div>
+					<div *ngIf="!subscriber">{{ getSubtitle(sub) }}</div>
+					<small *ngIf="!!subscriber">{{ getSubtitle(sub) }}</small>
+				</td>
+			</ng-container>
+
+			<ng-container matColumnDef="Name">
+				<th mat-header-cell *matHeaderCellDef>Name</th>
+				<td mat-cell *matCellDef="let sub">{{ getTitle(sub)}}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="EmailAddress">
@@ -16,6 +25,11 @@
 				<td mat-cell *matCellDef="let sub">{{ sub.Status }}</td>
 			</ng-container>
 
+			<ng-container matColumnDef="CreatedDate">
+				<th mat-header-cell *matHeaderCellDef>Created Date</th>
+				<td mat-cell *matCellDef="let sub">{{ sub.CreatedDate }}</td>
+			</ng-container>
+
 			<ng-container matColumnDef="ListCount">
 				<th mat-header-cell *matHeaderCellDef>List Count</th>
 				<td mat-cell *matCellDef="let sub">{{ sub.Lists.length }}</td>
@@ -26,6 +40,8 @@
 				[class]="row.selected ? 'selected' : ''"
 				(click)="select(row)"></tr>
 		</table>
+		<mat-progress-bar *ngIf="loading"
+			mode="indeterminate"></mat-progress-bar>
 	</div>
 	<div class="item" *ngIf="subscriber">
 		<mat-card>
@@ -35,10 +51,10 @@
 						<mat-icon>chevron_left</mat-icon>
 					</button>
 				</div>
-				<mat-card-title>
-					{{ subscriber.SubscriberKey }}
-				</mat-card-title>
-				<mat-card-subtitle>{{ subscriber.EmailAddress }}</mat-card-subtitle>
+				<mat-card-title>{{ getTitle(subscriber) }}</mat-card-title>
+				<mat-card-subtitle *ngIf="subscriber.Contact">
+					{{ getSubtitle(subscriber) }}
+				</mat-card-subtitle>
 			</mat-card-header>
 			<mat-card-content>
 				<subscriber [subscriber]="subscriber"></subscriber>

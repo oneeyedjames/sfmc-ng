@@ -17,6 +17,9 @@ export class SearchFormComponent {
 	fieldCtrl = new FormControl('email');
 	inputCtrl = new FormControl('', [Validators.required]);
 
+	@Output('search')
+	searchEvent = new EventEmitter<void>();
+
 	@Output('results')
 	resultsEvent = new EventEmitter<object[]>();
 	results = [] as object[];
@@ -90,36 +93,53 @@ export class SearchFormComponent {
 		this.inputCtrl.markAsTouched();
 		if (this.inputCtrl.invalid) return;
 
-		this.next();
+		this.results = [];
 		this.fieldCtrl.disable();
 		this.inputCtrl.disable();
+		this.searchEvent.emit();
 
-		this.api.getContact(this.inputCtrl.value, this.fieldCtrl.value)
-		.then(console.log, console.error);
+		Promise.all([
+			this.api.getContacts(this.inputCtrl.value, this.fieldCtrl.value),
+			this.api.getSubscribers(this.inputCtrl.value, this.fieldCtrl.value)
+		]).then(([cons, subs]) => {
+			subs.forEach((sub: any) => {
+				sub.Contact = cons.find((c: any) => {
+					return c.Id == sub.SubscriberKey;
+				}) as any;
 
-		this.api.getSubscriber(this.inputCtrl.value, this.fieldCtrl.value)
-		.then(result => this.next(result))
-		.catch(err => console.error(err))
-		.finally(() => {
+				// if (sub.Contact !== undefined) {
+				// 	sub.Lists.forEach((list: any) => {
+				// 		if (list.ListClassification == 'PublicationList') {
+				// 			list.Subscription = sub.Contact.Subscriptions.find((s: any) => {
+				// 				return s.GlobalProductCode === list.ListCode;
+				// 			}) as any;
+				// 		}
+				// 	});
+				// }
+			});
+
+			this.results = subs;
+		}).catch(console.error).finally(() => {
 			this.fieldCtrl.enable();
 			this.inputCtrl.enable();
+			this.resultsEvent.emit(this.results);
 		});
 	}
 
 	reset() {
 		this.inputCtrl.reset();
-		this.next();
+		this.resultsEvent.emit(this.results = []);
 	}
 
 	onKeyPress(event: KeyboardEvent) {
 		if (event.keyCode == 13) this.search();
 	}
 
-	protected next(data: object[] = []) {
-		data.forEach((sub: any) => sub.Events.sort((e1: any, e2: any) => {
-			return Date.parse(e2.EventDate) - Date.parse(e1.EventDate);
-		}));
-
-		this.resultsEvent.emit(this.results = data);
-	}
+	// protected next(data: object[] = []) {
+	// 	// data.forEach((sub: any) => sub.Events.sort((e1: any, e2: any) => {
+	// 	// 	return Date.parse(e2.EventDate) - Date.parse(e1.EventDate);
+	// 	// }));
+	//
+	// 	this.resultsEvent.emit(this.results = data);
+	// }
 }

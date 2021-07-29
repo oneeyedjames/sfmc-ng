@@ -1,6 +1,13 @@
 <div *ngIf="subscriber != null">
 	<p><strong>Email:</strong> {{ subscriber.EmailAddress }}</p>
-	<p><strong>Status:</strong> {{ subscriber.Status }}</p>
+	<p>
+		<strong>Status:</strong>
+		{{ subscriber.Status }}
+		<span *ngIf="syncStatus">
+			<mat-icon>refresh</mat-icon>
+			{{ syncStatus }}
+		</span>
+	</p>
 	<p><strong>Created:</strong> {{ subscriber.CreatedDate }}</p>
 	<p *ngIf="subscriber.UnsubscribedDate">
 		<strong>Unsubscribed:</strong>
@@ -8,10 +15,15 @@
 	</p>
 	<mat-tab-group mat-align-tabs="center">
 		<mat-tab label="Subscriptions">
-			<list-table [lists]="subscriber.Lists"></list-table>
+			<list-table [lists]="subscriber.Lists || []"
+				(update)="updateList($event)"></list-table>
+			<mat-progress-bar *ngIf="!subscriber.Lists"
+				mode="indeterminate"></mat-progress-bar>
 		</mat-tab>
 		<mat-tab label="History">
-			<event-table [events]="subscriber.Events"></event-table>
+			<event-table [events]="subscriber.Events || []"></event-table>
+			<mat-progress-bar *ngIf="!subscriber.Events"
+				mode="indeterminate"></mat-progress-bar>
 		</mat-tab>
 	</mat-tab-group>
 </div>

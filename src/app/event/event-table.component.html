@@ -8,7 +8,7 @@
 	<mat-checkbox [checked]="isTypeActive(type)" (change)="toggleType(type)"
 		*ngFor="let type of allTypes">{{ type }}</mat-checkbox>
 </div>
-<table mat-table multiTemplateDataRows [dataSource]="filteredEvents">
+<table mat-table [dataSource]="filteredEvents">
 	<ng-container matColumnDef="ListID">
 		<th mat-header-cell *matHeaderCellDef>List ID</th>
 		<td mat-cell *matCellDef="let event">{{ event.ListID }}</td>
@@ -32,6 +32,11 @@
 	<ng-container matColumnDef="EventDate">
 		<th mat-header-cell *matHeaderCellDef>Event Date</th>
 		<td mat-cell *matCellDef="let event">{{ event.EventDate }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="EventInfo">
+		<th mat-header-cell *matHeaderCellDef>Extra</th>
+		<td mat-cell *matCellDef="let event">{{ getInfo(event) }}</td>
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="cols"></tr>

@@ -1,4 +1,18 @@
 <table mat-table multiTemplateDataRows [dataSource]="lists">
+	<ng-container matColumnDef="Action">
+		<th mat-header-cell *matHeaderCellDef></th>
+		<td mat-cell *matCellDef="let list">
+			<div *ngIf="list.ListClassification == 'PublicationList'">
+				<button mat-stroked-button color="primary"
+					*ngIf="list.Status == 'Unsubscribed'"
+					(click)="activate(list)">Activate</button>
+				<!-- <button mat-stroked-button color="warn"
+					*ngIf="list.Status == 'Active'"
+					(click)="unsubscribe(list)">Unsubscribe</button> -->
+			</div>
+		</td>
+	</ng-container>
+
 	<ng-container matColumnDef="ListID">
 		<th mat-header-cell *matHeaderCellDef>List ID</th>
 		<td mat-cell *matCellDef="let list">{{ list.ListID }}</td>
@@ -13,7 +27,13 @@
 
 	<ng-container matColumnDef="Status">
 		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let list">{{ list.Status }}</td>
+		<td mat-cell *matCellDef="let list">
+			{{ list.Status }}
+			<div *ngIf="getSyncStatus(list)">
+				<mat-icon>refresh</mat-icon>
+				{{ getSyncStatus(list) }}
+			</div>
+		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="UnsubscribedDate">
@@ -40,6 +60,4 @@
 
 	<tr mat-header-row *matHeaderRowDef="cols"></tr>
 	<tr mat-row *matRowDef="let row; columns: cols;"></tr>
-	<!--<tr mat-row *matRowDef="let row; columns: ['Extra']"
-		[class.empty-row]="row.UnsubscribedDate == null"></tr>-->
 </table>

@@ -47,7 +47,7 @@ export class EventTableComponent {
 	allTypes: string[] = [];
 	// ['HardBounce', 'Click', 'Open', 'Sent', 'Unsubscribe'];
 
-	cols = ['ListID', 'ListName', 'EventType', 'EventDate'];
+	cols = ['ListID', 'ListName', 'EventType', 'EventDate', 'EventInfo'];
 
 	get filteredEvents() {
 		return this.events.filter(event => {
@@ -80,6 +80,22 @@ export class EventTableComponent {
 		const index = this.types.indexOf(type);
 		if (index < 0) this.types.push(type);
 		else this.types.splice(index, 1);
+	}
+
+	getInfo(event: any) {
+		switch (event.EventType) {
+			case 'Click':
+				try {
+					const url = new URL(event.URL);
+					return url.hostname + url.pathname;
+				} catch (e) {
+					return event.URL;
+				}
+			case 'Unsubscribe':
+				return event.IsMasterUnsubscribed === 'true' ? 'Master' : 'List Only';
+			default:
+				return undefined;
+		}
 	}
 
 	openDialog(event: any) {

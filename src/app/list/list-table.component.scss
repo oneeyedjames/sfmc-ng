@@ -7,8 +7,9 @@ table {
 		font-size: 14px;
 	}
 
-	.empty-row {
-		height: 0px;
+	.mat-row:hover {
+		background: whitesmoke;
+		cursor: pointer;
 	}
 }
 

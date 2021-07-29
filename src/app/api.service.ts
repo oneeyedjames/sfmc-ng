@@ -12,18 +12,49 @@ export class ApiService {
 
 	constructor(private http: HttpClient) {}
 
-	getSubscriber(input: string, field = 'email') {
-		return this.get('subscriber/complete', this.getParams(input, field));
+	getSubscribers(input: string, field = 'email') {
+		return this.get('subscribers', this.getParams(input, field));
 	}
 
-	getContact(input: string, field = 'email') {
-		return this.get('contact/subscriptions', this.getParams(input, field));
+	getSubscriberLists(key: string) {
+		return this.get(`subscriber/${key}/lists`);
 	}
 
-	private async get(path: string, params: Params) {
-		return await this.http.get<Array<object>>(`${this.baseUrl}/${path}`, {
-			params, observe: 'body',
-			headers: { Authorization: `JWT ${this.token}` }
+	getSubscriberEvents(key: string) {
+		return this.get(`subscriber/${key}/events`);
+	}
+
+	updateSubscriber(key: string, status: string) {
+
+	}
+
+	updateSubscriberList(key: string, listId: string, status: string) {
+		return this.post(`subscriber/${key}/lists`, {
+			Lists: [{ ID: listId, Status: status }]
+		});
+	}
+
+	getContacts(input: string, field = 'email') {
+		return this.get('contacts', this.getParams(input, field));
+	}
+
+	private get(path: string, params: Params = {}) {
+		return this.http.get<Array<object>>(`${this.baseUrl}/${path}`, {
+			headers: {
+				Authorization: `JWT ${this.token}`
+			},
+			observe: 'body',
+			params
+		}).toPromise();
+	}
+
+	private post(path: string, body: any) {
+		return this.http.post<object>(`${this.baseUrl}/${path}`, JSON.stringify(body), {
+			headers: {
+				Authorization: `JWT ${this.token}`,
+				'Content-Type': 'application/json'
+			},
+			observe: 'body'
 		}).toPromise();
 	}
 

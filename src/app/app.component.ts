@@ -12,6 +12,8 @@ export class AppComponent {
 
 	subscribers: any[] = [];
 
+	searching = false;
+
 	constructor() {}
 
 	onClick(type: ClickType) {
@@ -21,5 +23,17 @@ export class AppComponent {
 				console.log(type);
 				break;
 		}
+	}
+
+	onSearch() {
+		console.log('SEARCHING');
+		this.searching = true;
+		this.subscribers = [];
+	}
+
+	onResults(results: any[]) {
+		console.log('RESULT', results);
+		this.searching = false;
+		this.subscribers = results;
 	}
 }
