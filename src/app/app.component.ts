@@ -26,13 +26,11 @@ export class AppComponent {
 	}
 
 	onSearch() {
-		console.log('SEARCHING');
 		this.searching = true;
 		this.subscribers = [];
 	}
 
 	onResults(results: any[]) {
-		console.log('RESULT', results);
 		this.searching = false;
 		this.subscribers = results;
 	}
