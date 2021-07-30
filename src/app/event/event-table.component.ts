@@ -15,7 +15,9 @@ export class EventTableComponent {
 
 	@Input()
 	set events(events: any[]) {
-		this._events = events;
+		this._events = events.sort((e1: any, e2: any) => {
+			return Date.parse(e2.EventDate) - Date.parse(e1.EventDate);
+		});
 
 		const listMap = new Map<string, string>();
 
