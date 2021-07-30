@@ -1,21 +1,7 @@
-.mat-checkbox { margin: 8px; }
+@import '../../theme';
 
-table {
+.mat-table {
 	width: 100%;
-
-	.mat-icon {
-		width: 14px;
-		height: 14px;
-		font-size: 14px;
-	}
-
-	.mat-row:hover {
-		background: whitesmoke;
-		cursor: pointer;
-	}
 }
 
-.highlight {
-	cursor: pointer;
-	text-decoration: underline dashed;
-}
+.mat-checkbox { margin: 8px; }

@@ -11,3 +11,21 @@ $app-theme: mat-light-theme((
 		warn: $app-warn,
 	)
 ));
+
+.mat-table {
+	.mat-icon {
+		width: 14px;
+		height: 14px;
+		font-size: 14px;
+	}
+
+	.mat-row:hover {
+		background: map-get($mat-light-theme-background, hover);
+		cursor: pointer;
+	}
+}
+
+.highlight {
+	cursor: pointer;
+	text-decoration: underline dashed;
+}

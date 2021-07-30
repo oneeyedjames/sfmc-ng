@@ -2,18 +2,8 @@
 
 .mat-checkbox { margin: 8px; }
 
-table {
+.mat-table {
 	width: 100%;
-
-	.mat-icon {
-		width: 14px;
-		height: 14px;
-		font-size: 14px;
-	}
-
-	.mat-row {
-		cursor: pointer;
-	}
 
 	.mat-row:hover {
 		background: mat-color(map_get($app-theme, accent), 50);
