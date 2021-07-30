@@ -38,6 +38,10 @@ export class ApiService {
 		return this.get('contacts', this.getParams(input, field));
 	}
 
+	getContactSubscriptions(id: string) {
+		return this.get(`contact/${id}/subscriptions`);
+	}
+
 	private get(path: string, params: Params = {}) {
 		return this.http.get<Array<object>>(`${this.baseUrl}/${path}`, {
 			headers: {

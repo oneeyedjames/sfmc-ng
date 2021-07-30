@@ -15,16 +15,35 @@ export class SubscriberComponent {
 	set subscriber(subscriber: any) {
 		this._subscriber = subscriber;
 
+		const subKey = subscriber.SubscriberKey as string;
+
 		if (!subscriber.Lists) {
-			this.api.getSubscriberLists(subscriber.SubscriberKey)
-			.then(lists => subscriber.Lists = lists)
-			.catch(err => subscriber.Lists = []);
+			Promise.all([
+				this.api.getSubscriberLists(subKey),
+				this.api.getContactSubscriptions(subKey)
+			]).then(([lists, subs]) => {
+				subscriber.Lists = lists;
+
+				subs.forEach((sub: any) => {
+					const list = lists.find((l: any) => {
+						return l.ListCode == sub.GlobalProductCode;
+					}) as any;
+				});
+
+				console.log(lists);
+			}).catch(err => {
+				subscriber.Lists = [];
+				console.log(err);
+			});
 		}
 
 		if (!subscriber.Events) {
-			this.api.getSubscriberEvents(subscriber.SubscriberKey)
+			this.api.getSubscriberEvents(subKey)
 			.then(events => subscriber.Events = events)
-			.catch(err => subscriber.Events = []);
+			.catch(err => {
+				subscriber.Events = [];
+				console.error(err);
+			});
 		}
 	}
 
