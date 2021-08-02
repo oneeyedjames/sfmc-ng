@@ -1,4 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ListDialogComponent } from './list-dialog.component';
 
 @Component({
 	selector: 'list-table',
@@ -20,7 +23,9 @@ export class ListTableComponent {
 	];
 
 	@Output()
-	update = new EventEmitter<any>();
+	update = new EventEmitter<[string, string]>();
+
+	constructor(private dialog: MatDialog) {}
 
 	getSyncStatus(list: any) {
 		if (list.Subscription === undefined) return undefined;
@@ -30,13 +35,16 @@ export class ListTableComponent {
 		return undefined;
 	}
 
-	activate(list: any) {
-		list.Status = 'Active';
-		this.update.emit(list);
+	resubscribe(listId: string) {
+		this.update.emit([listId, 'Active']);
 	}
 
-	unsubscribe(list: any) {
-		list.Status = 'Unsubscribed';
-		this.update.emit(list);
+	unsubscribe(listId: string) {
+		this.dialog.open(ListDialogComponent)
+		.afterClosed().subscribe(res => {
+			if (res === 'unsubscribe') {
+				this.update.emit([listId, 'Unsubscribed']);
+			}
+		});
 	}
 }

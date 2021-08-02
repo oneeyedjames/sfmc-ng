@@ -30,7 +30,6 @@ export class SubscriberComponent {
 					}) as any;
 				});
 
-				console.log(lists);
 			}).catch(err => {
 				subscriber.Lists = [];
 				console.log(err);
@@ -57,10 +56,24 @@ export class SubscriberComponent {
 		return null;
 	}
 
-	updateList(list: any) {
-		this.api.updateSubscriberList(
-			this.subscriber.SubscriberKey,
-			list.ListID, list.Status
-		).then(console.log, console.error);
+	updateList([listId, status]: [string, string]) {
+		const list = this.subscriber.Lists.find((l: any) => l.ListID == listId);
+
+		if (list !== undefined) {
+			list.loading = true;
+
+			const subKey = this.subscriber.SubscriberKey as string;
+
+			const cb = (res: any) => {
+				list.loading = false;
+				list.Status = status;
+				list.UnsubscribedDate = undefined;
+			};
+
+			// setTimeout(cb, 1500);
+
+			this.api.updateSubscriberList(subKey, listId, status)
+			.then(cb).catch(console.error);
+		}
 	}
 }

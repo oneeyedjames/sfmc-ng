@@ -6,16 +6,21 @@ import { AppMaterialModule } from '../app-material.module';
 import { ListTableComponent } from './list-table.component';
 export { ListTableComponent } from './list-table.component';
 
+import { ListDialogComponent } from './list-dialog.component';
+export { ListDialogComponent } from './list-dialog.component';
+
 @NgModule({
 	imports: [
 		AppMaterialModule,
 		BrowserModule
 	],
 	exports: [
-		ListTableComponent
+		ListTableComponent,
+		ListDialogComponent
 	],
 	declarations: [
-		ListTableComponent
+		ListTableComponent,
+		ListDialogComponent
 	]
 })
 export class ListModule {}
