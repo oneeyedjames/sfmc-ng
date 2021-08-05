@@ -60,19 +60,23 @@ export class SubscriberComponent {
 		return null;
 	}
 
-	activate() {
+	updateStatus(status = 'Active') {
 		this.subscriber.loading = true;
 
 		const subKey = this.subscriber.SubscriberKey as string;
 
-		const cb = (res: any) => {
+		this.api.updateSubscriber(subKey, status)
+		.then((res: any) => {
 			this.subscriber.loading = false;
-			this.subscriber.Status = 'Active';
-			this.subscriber.UnsubscribedDate = undefined;
-		};
 
-		this.api.updateSubscriber(subKey, 'Active')
-		.then(cb).catch(console.error);
+			if (res[0].StatusCode === 'OK') {
+				this.subscriber.Status = status;
+				this.subscriber.UnsubscribedDate = undefined;
+			} else {
+				console.error(res);
+			}
+		})
+		.catch(console.error);
 	}
 
 	updateList([listId, status]: [string, string]) {
@@ -83,14 +87,18 @@ export class SubscriberComponent {
 
 			const subKey = this.subscriber.SubscriberKey as string;
 
-			const cb = (res: any) => {
-				list.loading = false;
-				list.Status = status;
-				list.UnsubscribedDate = undefined;
-			};
-
 			this.api.updateSubscriberList(subKey, listId, status)
-			.then(cb).catch(console.error);
+			.then((res: any) => {
+				list.loading = false;
+
+				if (res[0].StatusCode === 'OK') {
+					list.Status = status;
+					list.UnsubscribedDate = undefined;
+				} else {
+					console.error(res);
+				}
+			})
+			.catch(console.error);
 		}
 	}
 }

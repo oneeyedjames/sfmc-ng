@@ -2,8 +2,15 @@
 	<div *ngIf="subscriber.Status != 'Active'" style="float: right;">
 		<mat-spinner *ngIf="subscriber.loading"
 			color="primary" diameter="32"></mat-spinner>
-		<button mat-stroked-button color="primary" (click)="activate()"
-			*ngIf="!subscriber.loading">Activate</button>
+		<button mat-stroked-button color="primary" (click)="updateStatus()"
+			*ngIf="!subscriber.loading">Reactivate</button>
+	</div>
+	<div *ngIf="subscriber.Status == 'Active'" style="float: right;">
+		<mat-spinner *ngIf="subscriber.loading"
+			color="warn" diameter="32"></mat-spinner>
+		<button mat-stroked-button color="warn"
+			(click)="updateStatus('Unsubscribed')"
+			*ngIf="!subscriber.loading">Deactivate</button>
 	</div>
 	<p><strong>Email:</strong> {{ subscriber.EmailAddress }}</p>
 	<p>
