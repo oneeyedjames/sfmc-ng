@@ -1,19 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpContext, HttpParams } from '@angular/common/http';
 
 type Params = {
 	[param: string]: string | number | boolean
+}
+
+type Scalar = string | number | boolean;
+
+type HttpOptions = {
+	headers?: HttpHeaders | { [header: string]: string | string[]; };
+	context?: HttpContext;
+	observe?: 'body';
+	params?: HttpParams | { [param: string]: Scalar | readonly Scalar[]; };
+	reportProgress?: boolean;
+	responseType?: 'json';
+	withCredentials?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 	private baseUrl = 'http://localhost:3000/api';
 	private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjQ1Njc4OTAiLCJpc3MiOiJTZXJ2TUMiLCJhdWQiOiJTRk1DIFZpZXdlciIsImlhdCI6MTYyNjM3NDI2MX0.Fmcn3p-lOHgrXsWu5WFEjO3hM3dG5OvfJmzMQPw-XFY';
+	private headers = { Authorization: `JWT ${this.token}` };
 
 	constructor(private http: HttpClient) {}
 
 	getSubscribers(input: string, field = 'email') {
-		return this.get('subscribers', this.getParams(input, field));
+		return this.get('subscribers', this.buildParams(input, field));
 	}
 
 	getSubscriberLists(key: string) {
@@ -25,17 +38,21 @@ export class ApiService {
 	}
 
 	updateSubscriber(key: string, status: string) {
-
+		return this.put(`subscriber/${key}`, { Status: status });
 	}
 
 	updateSubscriberList(key: string, listId: string, status: string) {
-		return this.post(`subscriber/${key}/lists`, {
+		return this.put(`subscriber/${key}/lists`, {
 			Lists: [{ ID: listId, Status: status }]
 		});
 	}
 
 	getContacts(input: string, field = 'email') {
-		return this.get('contacts', this.getParams(input, field));
+		return this.get('contacts', this.buildParams(input, field));
+	}
+
+	getContact(id: string) {
+		return this.get(`contact/${id}`);
 	}
 
 	getContactSubscriptions(id: string) {
@@ -43,26 +60,27 @@ export class ApiService {
 	}
 
 	private get(path: string, params: Params = {}) {
-		return this.http.get<Array<object>>(`${this.baseUrl}/${path}`, {
-			headers: {
-				Authorization: `JWT ${this.token}`
-			},
-			observe: 'body',
-			params
+		return this.http.get<Array<object>>(`${this.baseUrl}/${path}`,
+			{ headers: this.headers, params }).toPromise();
+	}
+
+	private put(path: string, body: any) {
+		return this.http.put<object>(`${this.baseUrl}/${path}`, JSON.stringify(body), {
+			headers: { ...this.headers, 'Content-Type': 'application/json' }
 		}).toPromise();
 	}
 
-	private post(path: string, body: any) {
-		return this.http.post<object>(`${this.baseUrl}/${path}`, JSON.stringify(body), {
+	private buildOptions(opts: HttpOptions): HttpOptions {
+		return {
+			...opts,
 			headers: {
-				Authorization: `JWT ${this.token}`,
-				'Content-Type': 'application/json'
-			},
-			observe: 'body'
-		}).toPromise();
+				...this.headers,
+				...(opts.headers || {})
+			}
+		};
 	}
 
-	private getParams(value: string, key: string) {
+	private buildParams(value: string, key: string) {
 		const params = {} as { [key: string]: string };
 		params[key] = value;
 		return params;
