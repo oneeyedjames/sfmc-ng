@@ -4,7 +4,8 @@ import { ApiService } from '../api.service';
 
 @Component({
 	selector: 'subscriber',
-	templateUrl: './subscriber.component.html'
+	templateUrl: './subscriber.component.html',
+	styleUrls: ['./subscriber.component.scss']
 })
 export class SubscriberComponent {
 	private _subscriber: any;
@@ -28,6 +29,9 @@ export class SubscriberComponent {
 					const list = lists.find((l: any) => {
 						return l.ListCode == sub.GlobalProductCode;
 					}) as any;
+
+					if (list !== undefined)
+						list.Subscription = sub;
 				});
 
 			}).catch(err => {
@@ -56,6 +60,21 @@ export class SubscriberComponent {
 		return null;
 	}
 
+	activate() {
+		this.subscriber.loading = true;
+
+		const subKey = this.subscriber.SubscriberKey as string;
+
+		const cb = (res: any) => {
+			this.subscriber.loading = false;
+			this.subscriber.Status = 'Active';
+			this.subscriber.UnsubscribedDate = undefined;
+		};
+
+		this.api.updateSubscriber(subKey, 'Active')
+		.then(cb).catch(console.error);
+	}
+
 	updateList([listId, status]: [string, string]) {
 		const list = this.subscriber.Lists.find((l: any) => l.ListID == listId);
 
@@ -69,8 +88,6 @@ export class SubscriberComponent {
 				list.Status = status;
 				list.UnsubscribedDate = undefined;
 			};
-
-			// setTimeout(cb, 1500);
 
 			this.api.updateSubscriberList(subKey, listId, status)
 			.then(cb).catch(console.error);

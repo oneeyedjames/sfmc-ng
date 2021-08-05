@@ -1,10 +1,16 @@
 <div *ngIf="subscriber != null">
+	<div *ngIf="subscriber.Status != 'Active'" style="float: right;">
+		<mat-spinner *ngIf="subscriber.loading"
+			color="primary" diameter="32"></mat-spinner>
+		<button mat-stroked-button color="primary" (click)="activate()"
+			*ngIf="!subscriber.loading">Activate</button>
+	</div>
 	<p><strong>Email:</strong> {{ subscriber.EmailAddress }}</p>
 	<p>
 		<strong>Status:</strong>
 		{{ subscriber.Status }}
 		<span *ngIf="syncStatus">
-			<mat-icon>refresh</mat-icon>
+			<mat-icon class="inline">refresh</mat-icon>
 			{{ syncStatus }}
 		</span>
 	</p>
