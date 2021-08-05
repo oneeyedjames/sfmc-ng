@@ -25,21 +25,19 @@ export class EventTableComponent {
 			const name = event.ListName as string;
 			const keys = name.match(/^(.+) - (.+)$/i);
 			event.ListCode = keys ? keys[1] : name;
-
 			listMap.set(event.ListID, event.ListCode);
 		});
 
 		this.allLists = Array.from(listMap.entries()).map(entry =>
-			({ Id: entry[0], Name: entry[1] })).sort((l1: any, l2: any) => {
-			return (l1.Name as string).localeCompare(l2.Name);
-		})
+			({ Id: entry[0], Name: entry[1] })).sort((l1: any, l2: any) =>
+			(l1.Name as string).localeCompare(l2.Name));
 
 		this.lists = Array.from(listMap.keys());
 
 		const types = events.map(event => event.EventType as string);
 
+		this.allTypes = Array.from(new Set<string>(types)).sort();
 		this.types = Array.from(new Set<string>(types));
-		this.allTypes = Array.from(new Set<string>(types));
 	}
 
 	lists: string[] = [];
@@ -47,7 +45,6 @@ export class EventTableComponent {
 
 	types: string[] = [];
 	allTypes: string[] = [];
-	// ['HardBounce', 'Click', 'Open', 'Sent', 'Unsubscribe'];
 
 	cols = ['ListID', 'ListName', 'EventType', 'EventDate', 'EventInfo'];
 
@@ -94,7 +91,8 @@ export class EventTableComponent {
 					return event.URL;
 				}
 			case 'Unsubscribe':
-				return event.IsMasterUnsubscribed === 'true' ? 'Master' : 'List Only';
+				return event.IsMasterUnsubscribed === 'true'
+					? 'from All' : 'from ' + event.ListCode;
 			default:
 				return undefined;
 		}

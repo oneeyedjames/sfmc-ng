@@ -25,28 +25,32 @@ export class EventDialogComponent {
 		return this.event.IsMasterUnsubscribed !== undefined;
 	}
 
-	getInfo() {
-		const url = new URL(this.event.URL);
-		console.log(url);
-	}
-
-	getUrl() {
-		if (this.event.URL !== undefined) {
+	get url() {
+		if (this.isClick) {
 			const url = new URL(this.event.URL);
 			return url.origin + url.pathname;
 		}
 
-		return '';
+		return undefined;
 	}
 
-	getSearchParams() {
+	get urlParams() {
 		const params: { key: string; value: string; }[] = [];
 
-		if (this.event.URL !== undefined) {
+		if (this.isClick) {
 			new URL(this.event.URL).searchParams
 			.forEach((value, key) => params.push({ key, value }));
 		}
 
 		return params;
+	}
+
+	get unsubContext() {
+		if (this.isUnsub) {
+			return this.event.IsMasterUnsubscribed === 'true'
+				? 'All' : this.event.ListCode;
+		}
+
+		return undefined;
 	}
 }
