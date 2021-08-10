@@ -20,7 +20,11 @@ type HttpOptions = {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 	private baseUrl = 'http://localhost:3000/api';
-	private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjQ1Njc4OTAiLCJpc3MiOiJTZXJ2TUMiLCJhdWQiOiJTRk1DIFZpZXdlciIsImlhdCI6MTYyNjM3NDI2MX0.Fmcn3p-lOHgrXsWu5WFEjO3hM3dG5OvfJmzMQPw-XFY';
+
+	private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjQ1Njc4O'
+		+ 'TAiLCJpc3MiOiJTZXJ2TUMiLCJhdWQiOiJTRk1DIFZpZXdlciIsImlhdCI6MTYyNjM3N'
+		+ 'DI2MX0.Fmcn3p-lOHgrXsWu5WFEjO3hM3dG5OvfJmzMQPw-XFY';
+
 	private headers = { Authorization: `JWT ${this.token}` };
 
 	constructor(private http: HttpClient) {}
