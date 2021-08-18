@@ -43,6 +43,7 @@ export class SearchFormComponent {
 				sub.Contact = cons.find((c: any) => {
 					return c.Id == sub.SubscriberKey;
 				}) as any;
+				sub.CreatedDate = new Date(sub.CreatedDate);
 			});
 
 			this.results = subs;

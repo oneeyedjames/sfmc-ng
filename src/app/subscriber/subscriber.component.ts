@@ -25,6 +25,15 @@ export class SubscriberComponent {
 			]).then(([lists, subs]) => {
 				subscriber.Lists = lists;
 
+				lists.forEach((list: any) => {
+					list.CreatedDate = new Date(list.CreatedDate);
+					list.ModifiedDate = new Date(list.ModifiedDate);
+					list.UnsubscribedDate = list.UnsubscribedDate || undefined;
+
+					if (list.UnsubscribedDate !== undefined)
+						list.UnsubscribedDate = new Date(list.UnsubscribedDate);
+				});
+
 				subs.forEach((sub: any) => {
 					const list = lists.find((l: any) => {
 						return l.ListCode == sub.GlobalProductCode;
@@ -42,7 +51,13 @@ export class SubscriberComponent {
 
 		if (!subscriber.Events) {
 			this.api.getSubscriberEvents(subKey)
-			.then(events => subscriber.Events = events)
+			.then(events => {
+				subscriber.Events = events;
+
+				events.forEach((event: any) => {
+					event.EventDate = new Date(event.EventDate);
+				});
+			})
 			.catch(err => {
 				subscriber.Events = [];
 				console.error(err);

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { formatDate, formatTime } from '../app.functions';
 import { ListDialogComponent } from './list-dialog.component';
 
 @Component({
@@ -46,5 +47,13 @@ export class ListTableComponent {
 				this.update.emit([listId, 'Unsubscribed']);
 			}
 		});
+	}
+
+	formatDate(date?: Date) {
+		return formatDate(date);
+	}
+
+	formatTime(date?: Date) {
+		return formatTime(date);
 	}
 }

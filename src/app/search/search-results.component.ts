@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { formatDate } from '../app.functions';
+
 @Component({
 	selector: 'search-results',
 	templateUrl: './search-results.component.html',
@@ -36,7 +38,7 @@ export class SearchResultsComponent {
 	}
 
 	getSubtitle(subscriber: any) {
-		return subscriber.Contact ? subscriber.SubscriberKey : undefined;
+		return subscriber.SubscriberKey;
 	}
 
 	select(subscriber?: any) {
@@ -49,5 +51,9 @@ export class SearchResultsComponent {
 	deselect() {
 		this.results!.forEach(sub => sub.selected = false);
 		this._subscriber = undefined;
+	}
+
+	formatDate(date?: Date) {
+		return formatDate(date);
 	}
 }

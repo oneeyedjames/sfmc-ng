@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { formatDate, formatTime } from '../app.functions';
 import { EventDialogComponent } from './event-dialog.component';
 
 @Component({
@@ -100,5 +101,13 @@ export class EventTableComponent {
 
 	openDialog(event: any) {
 		this.dialog.open(EventDialogComponent, { data: event });
+	}
+
+	formatDate(date?: Date) {
+		return formatDate(date);
+	}
+
+	formatTime(date?: Date) {
+		return formatTime(date);
 	}
 }
