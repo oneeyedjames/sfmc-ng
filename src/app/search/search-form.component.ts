@@ -40,10 +40,23 @@ export class SearchFormComponent {
 			this.api.getSubscribers(this.inputCtrl.value, this.fieldCtrl.value)
 		]).then(([cons, subs]) => {
 			subs.forEach((sub: any) => {
-				sub.Contact = cons.find((c: any) => {
-					return c.Id == sub.SubscriberKey;
-				}) as any;
 				sub.CreatedDate = new Date(sub.CreatedDate);
+			});
+
+			cons.forEach((con: any) => {
+				const sub = subs.find((s: any) => {
+					return s.SubscriberKey == con.Id;
+				}) as any;
+
+				if (sub !== undefined)
+					sub.Contact = con;
+				else
+					subs.push({
+						SubscriberKey: con.Id,
+						EmailAddress: con.Email,
+						Status: 'Unsynced',
+						Contact: con
+					});
 			});
 
 			this.results = subs;

@@ -41,6 +41,18 @@ export class SubscriberComponent {
 
 					if (list !== undefined)
 						list.Subscription = sub;
+					else
+						lists.push({
+							ListID: 0,
+							ListCode: sub.GlobalProductCode,
+							ListName: sub.GlobalProductCode,
+							ListClassification: 'PublicationList',
+							Status: 'Unsynced',
+							UnsubscribedDate: undefined,
+							CreatedDate: undefined,
+							ModifiedDate: undefined,
+							Subscription: sub
+						});
 				});
 
 			}).catch(err => {

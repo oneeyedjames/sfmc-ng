@@ -21,7 +21,10 @@
 
 	<ng-container matColumnDef="ListID">
 		<th mat-header-cell *matHeaderCellDef>List ID</th>
-		<td mat-cell *matCellDef="let list">{{ list.ListID }}</td>
+		<td mat-cell *matCellDef="let list">
+			<!-- <mat-icon *ngIf="list.ListID == 0">hourglass_top</mat-icon> -->
+			<span *ngIf="list.ListID != 0">{{ list.ListID }}</span>
+		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="ListName">
