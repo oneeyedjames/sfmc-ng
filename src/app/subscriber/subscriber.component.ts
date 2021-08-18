@@ -50,7 +50,13 @@ export class SubscriberComponent {
 		}
 	}
 
-	constructor(private api: ApiService) {}
+	get syncEmail() {
+		if (this.subscriber.Contact === undefined) return undefined;
+		if (this.subscriber.Contact.Email != this.subscriber.EmailAddress)
+			return this.subscriber.Contact.Email;
+
+		return null
+	}
 
 	get syncStatus() {
 		if (this.subscriber.Contact === undefined) return undefined;
@@ -59,6 +65,8 @@ export class SubscriberComponent {
 
 		return null;
 	}
+
+	constructor(private api: ApiService) {}
 
 	updateStatus(status = 'Active') {
 		this.subscriber.loading = true;

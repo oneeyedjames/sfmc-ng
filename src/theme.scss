@@ -14,9 +14,11 @@ $app-theme: mat-light-theme((
 
 .mat-table {
 	.mat-icon {
-		width: 14px;
-		height: 14px;
-		font-size: 14px;
+		width: 24px;
+		height: 20px;
+		font-size: 20px;
+		line-height: 20px;
+		float: left;
 	}
 
 	.mat-row:hover {

@@ -12,7 +12,14 @@
 			(click)="updateStatus('Unsubscribed')"
 			*ngIf="!subscriber.loading">Deactivate</button>
 	</div>
-	<p><strong>Email:</strong> {{ subscriber.EmailAddress }}</p>
+	<p>
+		<strong>Email:</strong>
+		{{ subscriber.EmailAddress }}
+		<span *ngIf="syncEmail">
+			<mat-icon class="inline">refresh</mat-icon>
+			{{ syncEmail }}
+		</span>
+	</p>
 	<p>
 		<strong>Status:</strong>
 		{{ subscriber.Status }}
