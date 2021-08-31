@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+import { formatDate } from '../app.functions';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -54,7 +55,6 @@ export class SubscriberComponent {
 							Subscription: sub
 						});
 				});
-
 			}).catch(err => {
 				subscriber.Lists = [];
 				console.log(err);
@@ -135,5 +135,9 @@ export class SubscriberComponent {
 			})
 			.catch(console.error);
 		}
+	}
+
+	formatDate(date?: Date) {
+		return formatDate(date);
 	}
 }

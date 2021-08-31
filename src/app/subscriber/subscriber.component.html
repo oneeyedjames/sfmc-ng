@@ -28,10 +28,10 @@
 			{{ syncStatus }}
 		</span>
 	</p>
-	<p><strong>Created:</strong> {{ subscriber.CreatedDate }}</p>
+	<p><strong>Created:</strong> {{ formatDate(subscriber.CreatedDate) }}</p>
 	<p *ngIf="subscriber.UnsubscribedDate">
 		<strong>Unsubscribed:</strong>
-		{{ subscriber.UnsubscribedDate }}
+		{{ formatDate(subscriber.UnsubscribedDate) }}
 	</p>
 	<mat-tab-group mat-align-tabs="center">
 		<mat-tab label="Subscriptions">

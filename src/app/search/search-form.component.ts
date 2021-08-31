@@ -41,6 +41,9 @@ export class SearchFormComponent {
 		]).then(([cons, subs]) => {
 			subs.forEach((sub: any) => {
 				sub.CreatedDate = new Date(sub.CreatedDate);
+
+				if (sub.UnsubscribedDate !== undefined)
+					sub.UnsubscribedDate = new Date(sub.UnsubscribedDate);
 			});
 
 			cons.forEach((con: any) => {
