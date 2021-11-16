@@ -3,6 +3,7 @@
 $app-primary: mat-palette($mat-indigo);
 $app-accent: mat-palette($mat-light-blue);
 $app-warn: mat-palette($mat-red);
+$app-success: mat-palette($mat-green);
 
 $app-theme: mat-light-theme((
 	color: (
@@ -11,6 +12,20 @@ $app-theme: mat-light-theme((
 		warn: $app-warn,
 	)
 ));
+
+@mixin table-row-color($color) {
+	&:hover {
+		background: mat-color($color, 50);
+	}
+
+	&.selected {
+		background: mat-color($color, 100);
+	}
+
+	.mat-cell {
+		color: mat-color($color, 900);
+	}
+}
 
 .mat-table {
 	.mat-icon {
@@ -21,13 +36,49 @@ $app-theme: mat-light-theme((
 		float: left;
 	}
 
-	.mat-row:hover {
-		background: map-get($mat-light-theme-background, hover);
+	.mat-row {
 		cursor: pointer;
+
+		&:hover {
+			background: mat-color(map-get($app-theme, accent), 50);
+
+			// .mat-cell {
+			// 	color: mat-color($app-accent, 900);
+			// }
+		}
+
+		&.selected {
+			background: mat-color(map-get($app-theme, accent), 100);
+
+			// .mat-cell {
+			// 	color: mat-color($app-accent, 900);
+			// }
+		}
+
+		&.success {
+			@include table-row-color($app-success);
+		}
+
+		&.warn {
+			@include table-row-color($app-warn);
+		}
 	}
 }
 
 .highlight {
 	cursor: pointer;
 	text-decoration: underline dashed;
+}
+
+.mat-button, .mat-icon-button, .mat-stroked-button {
+	&.mat-success {
+		color: mat-color($app-success, 700);
+	}
+}
+
+.mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab {
+	&.mat-success {
+		background: mat-color($app-success, 500);
+		color: white;
+	}
 }

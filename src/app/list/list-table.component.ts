@@ -36,6 +36,13 @@ export class ListTableComponent {
 		return undefined;
 	}
 
+	getColor(list: any) {
+		switch (list.Status) {
+			case 'Unsubscribed': return 'warn';
+			default: return '';
+		}
+	}
+
 	resubscribe(listId: string) {
 		this.update.emit([listId, 'Active']);
 	}

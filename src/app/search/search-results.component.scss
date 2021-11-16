@@ -4,13 +4,17 @@
 
 .mat-table {
 	width: 100%;
+}
 
-	.mat-row:hover {
-		background: mat-color(map_get($app-theme, accent), 50);
-	}
+.mat-card {
+	.mat-card-title {
+		&.success {
+			color: mat-color($app-success, 900);
+		}
 
-	.mat-row.selected {
-		background: mat-color(map_get($app-theme, accent), 100);
+		&.warn {
+			color: mat-color($app-warn, 900);
+		}
 	}
 }
 

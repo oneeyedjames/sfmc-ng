@@ -70,5 +70,6 @@
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="cols"></tr>
-	<tr mat-row *matRowDef="let row; columns: cols;"></tr>
+	<tr mat-row *matRowDef="let row; columns: cols;"
+		[class]="getColor(row)"></tr>
 </table>

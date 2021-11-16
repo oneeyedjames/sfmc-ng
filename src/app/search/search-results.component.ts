@@ -33,11 +33,39 @@ export class SearchResultsComponent {
 			['SubscriberKey', 'Name', 'EmailAddress', 'Status', 'CreatedDate'];
 	}
 
-	getTitle(subscriber: any) {
+	getClass(subscriber?: any) {
+		subscriber = subscriber || this.subscriber;
+
+		const classes = [] as string[];
+
+		switch (subscriber.Status) {
+			// case 'Active':       classes.push('success'); break;
+			case 'Unsubscribed': classes.push('warn');    break;
+		}
+
+		if (subscriber.selected) classes.push('selected');
+
+		return classes.join(' ');
+	}
+
+	getColor(subscriber?: any) {
+		subscriber = subscriber || this.subscriber;
+
+		switch (subscriber.Status) {
+			case 'Unsubscribed': return 'warn';
+			default: return 'accent';
+		}
+	}
+
+	getTitle(subscriber?: any) {
+		subscriber = subscriber || this.subscriber;
+
 		return subscriber.Contact ? subscriber.Contact.Name : undefined;
 	}
 
-	getSubtitle(subscriber: any) {
+	getSubtitle(subscriber?: any) {
+		subscriber = subscriber || this.subscriber;
+
 		return subscriber.SubscriberKey;
 	}
 

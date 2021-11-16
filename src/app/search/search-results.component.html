@@ -39,8 +39,7 @@
 
 			<tr mat-header-row *matHeaderRowDef="columns"></tr>
 			<tr mat-row *matRowDef="let row; columns: columns;"
-				[class]="row.selected ? 'selected' : ''"
-				(click)="select(row)"></tr>
+				[class]="getClass(row)" (click)="select(row)"></tr>
 		</table>
 		<mat-progress-bar *ngIf="loading"
 			mode="indeterminate"></mat-progress-bar>
@@ -49,13 +48,16 @@
 		<mat-card>
 			<mat-card-header>
 				<div mat-card-avatar>
-					<button mat-mini-fab (click)="deselect()">
+					<button mat-mini-fab [color]="getColor()"
+						(click)="deselect()">
 						<mat-icon>chevron_left</mat-icon>
 					</button>
 				</div>
-				<mat-card-title>{{ getTitle(subscriber) }}</mat-card-title>
+				<mat-card-title [class]="getColor()">
+					{{ getTitle() }}
+				</mat-card-title>
 				<mat-card-subtitle>
-					<a href="#">{{ getSubtitle(subscriber) }}</a>
+					<a href="#">{{ getSubtitle() }}</a>
 				</mat-card-subtitle>
 			</mat-card-header>
 			<mat-card-content>
