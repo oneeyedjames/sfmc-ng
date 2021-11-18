@@ -32,8 +32,8 @@
 	<ng-container matColumnDef="EventDate">
 		<th mat-header-cell *matHeaderCellDef>Event Date</th>
 		<td mat-cell *matCellDef="let event">
-			<div>{{ formatDate(event.EventDate) }}</div>
-			<div>{{ formatTime(event.EventDate) }}</div>
+			{{ formatDate(event.EventDate) }}
+			{{ formatTime(event.EventDate) }}
 		</td>
 	</ng-container>
 

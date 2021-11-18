@@ -28,7 +28,10 @@
 			{{ syncStatus }}
 		</span>
 	</p>
-	<p><strong>Created:</strong> {{ formatDate(subscriber.CreatedDate) }}</p>
+	<p>
+		<strong>Created:</strong>
+		{{ formatDate(subscriber.CreatedDate) }}
+	</p>
 	<p *ngIf="subscriber.UnsubscribedDate">
 		<strong>Unsubscribed:</strong>
 		{{ formatDate(subscriber.UnsubscribedDate) }}
