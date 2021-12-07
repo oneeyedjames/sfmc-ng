@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 
 import { formatDate } from '../app.functions';
 
+import { SearchService } from './search.service';
+
 @Component({
 	selector: 'search-results',
 	templateUrl: './search-results.component.html',
@@ -32,6 +34,8 @@ export class SearchResultsComponent {
 		return this.subscriber ? ['SubscriberKey'] :
 			['SubscriberKey', 'Name', 'EmailAddress', 'Status', 'CreatedDate'];
 	}
+
+	constructor(private svc: SearchService) {}
 
 	getClass(subscriber?: any) {
 		subscriber = subscriber || this.subscriber;
@@ -83,5 +87,12 @@ export class SearchResultsComponent {
 
 	formatDate(date?: Date) {
 		return formatDate(date);
+	}
+
+	search(input: string, event?: Event) {
+		if (event !== undefined)
+			event.preventDefault();
+
+		this.svc.search(input);
 	}
 }

@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 import { formatDate } from '../app.functions';
 import { ApiService } from '../api.service';
 
+import { SearchService } from '../search/search.module';
+
 @Component({
 	selector: 'subscriber',
 	templateUrl: './subscriber.component.html',
@@ -93,7 +95,7 @@ export class SubscriberComponent {
 		return null;
 	}
 
-	constructor(private api: ApiService) {}
+	constructor(private api: ApiService, private svc: SearchService) {}
 
 	updateStatus(status = 'Active') {
 		this.subscriber.loading = true;
@@ -139,5 +141,12 @@ export class SubscriberComponent {
 
 	formatDate(date?: Date) {
 		return formatDate(date);
+	}
+
+	search(input: string, event?: Event) {
+		if (event !== undefined)
+			event.preventDefault();
+
+		this.svc.search(input);
 	}
 }

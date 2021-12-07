@@ -3,6 +3,8 @@ import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
+	private searchSubj = new Subject<string>();
+
 	private contactSubj = new Subject<object[]>();
 	private subscriberSubj = new Subject<object[]>();
 
@@ -21,4 +23,12 @@ export class SearchService {
 	// set subscribers(subs: Observable<object[]>) {
 	// 	subs.subscribe(this.subscriberSubj);
 	// }
+
+	search(input: string) {
+		this.searchSubj.next(input);
+	}
+
+	subscribe(handler: (input: string) => void) {
+		return this.searchSubj.subscribe(handler);
+	}
 }

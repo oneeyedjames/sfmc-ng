@@ -14,10 +14,12 @@
 	</div>
 	<p>
 		<strong>Email:</strong>
-		{{ subscriber.EmailAddress }}
+		<a href="#" (click)="search(subscriber.EmailAddress, $event)">
+			{{ subscriber.EmailAddress }}
+		</a>
 		<span *ngIf="syncEmail">
 			<mat-icon class="inline">refresh</mat-icon>
-			{{ syncEmail }}
+			<a href="#" (click)="search(syncEmail, $event)">{{ syncEmail }}</a>
 		</span>
 	</p>
 	<p>

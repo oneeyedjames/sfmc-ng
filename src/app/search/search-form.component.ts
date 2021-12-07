@@ -1,14 +1,16 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { ApiService } from '../api.service';
+import { SearchService } from './search.service';
 
 @Component({
 	selector: 'search-form',
 	templateUrl: './search-form.component.html',
 	styleUrls: ['./search-form.component.scss']
 })
-export class SearchFormComponent {
+export class SearchFormComponent implements OnInit, OnDestroy {
 	inputCtrl = new FormControl('', [Validators.required]);
 
 	@Output('search')
@@ -18,7 +20,21 @@ export class SearchFormComponent {
 	resultsEvent = new EventEmitter<object[]>();
 	results = [] as object[];
 
-	constructor(private api: ApiService) {}
+	private sub?: Subscription;
+
+	constructor(private svc: SearchService, private api: ApiService) {}
+
+	ngOnInit() {
+		this.sub = this.svc.subscribe(input => {
+			this.inputCtrl.setValue(input);
+			this.search();
+		});
+	}
+
+	ngOnDestroy() {
+		if (this.sub !== undefined)
+			this.sub.unsubscribe();
+	}
 
 	search() {
 		this.inputCtrl.markAsTouched();
