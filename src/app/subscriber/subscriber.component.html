@@ -13,13 +13,13 @@
 			*ngIf="!subscriber.loading">Deactivate</button>
 	</div>
 	<p>
-		<strong>Email:</strong>
-		<a href="#" (click)="search(subscriber.EmailAddress, $event)">
-			{{ subscriber.EmailAddress }}
-		</a>
+		<strong>Email:&nbsp;</strong>
+		<a (click)="search(subscriber.EmailAddress, $event)"
+			href="#">{{ subscriber.EmailAddress }}</a>
 		<span *ngIf="syncEmail">
 			<mat-icon class="inline">refresh</mat-icon>
-			<a href="#" (click)="search(syncEmail, $event)">{{ syncEmail }}</a>
+			<a (click)="search(syncEmail, $event)"
+				href="#">{{ syncEmail }}</a>
 		</span>
 	</p>
 	<p>

@@ -26,8 +26,10 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.sub = this.svc.subscribe(input => {
-			this.inputCtrl.setValue(input);
-			this.search();
+			if (this.inputCtrl.value != input) {
+				this.inputCtrl.setValue(input);
+				this.search();
+			}
 		});
 	}
 
