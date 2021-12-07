@@ -1,15 +1,7 @@
-<h1 style="display: inline">Subscriber Search</h1>
+<h1 style="display: inline">Search</h1>
 &nbsp;
 <mat-form-field appearance="standard">
-	<mat-label>Search By</mat-label>
-	<mat-select [formControl]="fieldCtrl">
-		<mat-option value="key">Subscriber Key</mat-option>
-		<mat-option value="email">Email Address</mat-option>
-	</mat-select>
-</mat-form-field>
-&nbsp;
-<mat-form-field appearance="standard">
-	<mat-label>{{ fieldLabels[fieldCtrl.value] }}</mat-label>
+	<mat-label>Email or Subscriber Key</mat-label>
 	<input matInput required [formControl]="inputCtrl"
 		(keypress)="onKeyPress($event)">
 	<mat-error *ngIf="inputCtrl.invalid">Input is required</mat-error>

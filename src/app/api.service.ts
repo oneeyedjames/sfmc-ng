@@ -28,7 +28,7 @@ export class ApiService {
 	constructor(private http: HttpClient) {}
 
 	getSubscribers(input: string, field = 'email') {
-		return this.get('subscribers', this.buildParams(input, field));
+		return this.get('subscribers', { search: input });
 	}
 
 	getSubscriberLists(key: string) {
@@ -50,7 +50,7 @@ export class ApiService {
 	}
 
 	getContacts(input: string, field = 'email') {
-		return this.get('contacts', this.buildParams(input, field));
+		return this.get('contacts', { search: input });
 	}
 
 	getContact(id: string) {
@@ -80,11 +80,5 @@ export class ApiService {
 				...(opts.headers || {})
 			}
 		};
-	}
-
-	private buildParams(value: string, key: string) {
-		const params = {} as { [key: string]: string };
-		params[key] = value;
-		return params;
 	}
 }

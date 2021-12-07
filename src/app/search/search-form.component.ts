@@ -9,12 +9,6 @@ import { ApiService } from '../api.service';
 	styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent {
-	fieldLabels = {
-		key: 'Subscriber Key',
-		email: 'Email Address'
-	} as { [key: string]: string }
-
-	fieldCtrl = new FormControl('email');
 	inputCtrl = new FormControl('', [Validators.required]);
 
 	@Output('search')
@@ -31,13 +25,12 @@ export class SearchFormComponent {
 		if (this.inputCtrl.invalid) return;
 
 		this.results = [];
-		this.fieldCtrl.disable();
 		this.inputCtrl.disable();
 		this.searchEvent.emit();
 
 		Promise.all([
-			this.api.getContacts(this.inputCtrl.value, this.fieldCtrl.value),
-			this.api.getSubscribers(this.inputCtrl.value, this.fieldCtrl.value)
+			this.api.getContacts(this.inputCtrl.value),
+			this.api.getSubscribers(this.inputCtrl.value)
 		]).then(([cons, subs]) => {
 			subs.forEach((sub: any) => {
 				sub.CreatedDate = new Date(sub.CreatedDate);
@@ -64,7 +57,6 @@ export class SearchFormComponent {
 
 			this.results = subs;
 		}).catch(console.error).finally(() => {
-			this.fieldCtrl.enable();
 			this.inputCtrl.enable();
 			this.resultsEvent.emit(this.results);
 		});
