@@ -57,7 +57,9 @@
 					{{ getTitle() }}
 				</mat-card-title>
 				<mat-card-subtitle>
-					<a href="#" (click)="search(getSubtitle(), $event)">{{ getSubtitle() }}</a>
+					<a href="{{ getPermalink() }}"
+						(click)="search(getSubtitle(), $event)"
+						target="_blank">{{ getSubtitle() }}</a>
 				</mat-card-subtitle>
 			</mat-card-header>
 			<mat-card-content>

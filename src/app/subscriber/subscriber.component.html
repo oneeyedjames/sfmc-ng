@@ -15,7 +15,7 @@
 	<p>
 		<strong>Email:&nbsp;</strong>
 		<a (click)="search(subscriber.EmailAddress, $event)"
-			href="#">{{ subscriber.EmailAddress }}</a>
+			href="mailto:{{subscriber.EmailAddress}}">{{ subscriber.EmailAddress }}</a>
 		<span *ngIf="syncEmail">
 			<mat-icon class="inline">refresh</mat-icon>
 			<a (click)="search(syncEmail, $event)"

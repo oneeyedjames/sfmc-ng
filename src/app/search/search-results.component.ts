@@ -73,6 +73,12 @@ export class SearchResultsComponent {
 		return subscriber.SubscriberKey;
 	}
 
+	getPermalink(subscriber?: any) {
+		subscriber = subscriber || this.subscriber;
+
+		return `https://odb.lightning.force.com/lightning/r/Contact/${subscriber.SubscriberKey}/view`;
+	}
+
 	select(subscriber?: any) {
 		this.deselect();
 
