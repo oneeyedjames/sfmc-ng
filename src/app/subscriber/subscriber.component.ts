@@ -71,9 +71,23 @@ export class SubscriberComponent {
 				events.forEach((event: any) => {
 					event.EventDate = new Date(event.EventDate);
 				});
+
+				if (subscriber.Contact) {
+					return this.api.getSubscriberEvents(subKey,
+						subscriber.Contact.BusinessLocation);
+				} else {
+					return [];
+				}
+			})
+			.then(events => {
+				subscriber.Events = [ ...subscriber.Events, ...events ];
+
+				events.forEach((event: any) => {
+					event.EventDate = new Date(event.EventDate);
+				});
 			})
 			.catch(err => {
-				subscriber.Events = [];
+				// subscriber.Events = [];
 				console.error(err);
 			});
 		}

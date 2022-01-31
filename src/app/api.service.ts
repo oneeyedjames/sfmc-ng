@@ -35,8 +35,9 @@ export class ApiService {
 		return this.get(`subscriber/${key}/lists`);
 	}
 
-	getSubscriberEvents(key: string) {
-		return this.get(`subscriber/${key}/events`);
+	getSubscriberEvents(key: string, locale?: string) {
+		return locale === undefined ? this.get(`subscriber/${key}/events`)
+			: this.get(`${locale.toLowerCase()}/subscriber/${key}/events`);
 	}
 
 	updateSubscriber(key: string, status: string) {
