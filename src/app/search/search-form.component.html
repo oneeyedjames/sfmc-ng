@@ -1,23 +1,20 @@
-<h1 style="display: inline">Search</h1>
-&nbsp;
-<mat-form-field appearance="standard">
-	<mat-label>Email or Subscriber Key</mat-label>
-	<input matInput required [formControl]="inputCtrl"
-		(keypress)="onKeyPress($event)">
-	<mat-error *ngIf="inputCtrl.invalid">Input is required</mat-error>
-</mat-form-field>
-&nbsp;
-<button mat-flat-button color="primary"
-	[disabled]="inputCtrl.disabled" (click)="search()">
-	<mat-icon matSuffix>search</mat-icon>
-	Search
-</button>
-&nbsp;
-<button mat-flat-button color="warn"
-	[disabled]="inputCtrl.disabled || results.length == 0" (click)="reset()">
-	<mat-icon matSuffix>clear</mat-icon>
-	Clear
-</button>
-<!-- &nbsp;
-<mat-spinner *ngIf="inputCtrl.disabled" diameter="36" color="accent"
-	style="display: inline-block; vertical-align: middle"></mat-spinner> -->
+<div class="form-wrapper">
+	<mat-form-field appearance="standard" id="search-field">
+		<mat-label>Email or Subscriber Key</mat-label>
+		<input matInput required [formControl]="inputCtrl"
+			(keypress)="onKeyPress($event)">
+		<mat-error *ngIf="inputCtrl.invalid">Input is required</mat-error>
+	</mat-form-field>
+	<button mat-flat-button color="primary"
+		[disabled]="inputCtrl.disabled || inputCtrl.invalid" (click)="search()">
+		<mat-icon matSuffix>search</mat-icon>
+		Search
+	</button>
+	<button mat-flat-button color="warn"
+		[disabled]="inputCtrl.disabled || results.length == 0" (click)="reset()">
+		<mat-icon matSuffix>clear</mat-icon>
+		Clear
+	</button>
+	<!-- <mat-spinner *ngIf="inputCtrl.disabled" diameter="36" color="accent"
+		style="display: inline-block; vertical-align: middle"></mat-spinner> -->
+</div>

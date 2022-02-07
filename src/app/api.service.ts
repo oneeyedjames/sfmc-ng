@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpContext, HttpParams } from '@angular/common/http';
+
+import {
+	HttpClient,
+	HttpHeaders,
+	HttpContext,
+	HttpParams
+} from '@angular/common/http';
 
 type Params = {
 	[param: string]: string | number | boolean
@@ -27,7 +33,7 @@ export class ApiService {
 
 	constructor(private http: HttpClient) {}
 
-	getSubscribers(input: string, field = 'email') {
+	getSubscribers(input: string) {
 		return this.get('subscribers', { search: input });
 	}
 
@@ -50,7 +56,7 @@ export class ApiService {
 		});
 	}
 
-	getContacts(input: string, field = 'email') {
+	getContacts(input: string) {
 		return this.get('contacts', { search: input });
 	}
 

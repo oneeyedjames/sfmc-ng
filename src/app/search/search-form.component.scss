@@ -2,3 +2,13 @@
 	width: 20px;
 	font-size: 20px;
 }
+
+.form-wrapper {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 8px;
+
+	#search-field { flex-grow: 1; }
+}
