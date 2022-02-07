@@ -29,57 +29,47 @@ export class EventTableComponent {
 			listMap.set(event.ListID, event.ListCode);
 		});
 
-		this.allLists = Array.from(listMap.entries()).map(entry =>
-			({ Id: entry[0], Name: entry[1] })).sort((l1: any, l2: any) =>
-			(l1.Name as string).localeCompare(l2.Name));
-
-		this.lists = Array.from(listMap.keys());
+		this.lists = Array.from(listMap.entries())
+		.map(entry => ({ id: entry[0], name: entry[1], selected: true }))
+		.sort((l1, l2) => l1.name.localeCompare(l2.name));
 
 		const types = events.map(event => event.EventType as string);
 
-		this.allTypes = Array.from(new Set<string>(types)).sort();
-		this.types = Array.from(new Set<string>(types));
+		this.types = Array.from(new Set<string>(types))
+		.map(type => ({ name: type, selected: true }))
+		.sort((t1, t2) => t1.name.localeCompare(t2.name));
 	}
 
-	lists: string[] = [];
-	allLists: any[] = [];
-
-	types: string[] = [];
-	allTypes: string[] = [];
+	lists: any[] = [];
+	types: any[] = [];
 
 	cols = ['ListID', 'ListName', 'EventType', 'EventDate', 'EventInfo'];
 
+	get selectedLists() {
+		return this.lists.filter(l => l.selected);
+	}
+
+	get selectedTypes() {
+		return this.types.filter(t => t.selected);
+	}
+
 	get filteredEvents() {
-		return this.events.filter(event => {
-			return this.isListActive(event.ListID) &&
-				this.isTypeActive(event.EventType);
-		});
+		return this.events.filter(e => (
+			this.isListSelected(e.ListID) &&
+			this.isTypeSelected(e.EventType)
+		));
 	}
 
 	constructor(public dialog: MatDialog) {}
 
-	hasMoreInfo(event: any) {
-		return !['Open', 'Sent'].includes(event.EventType);
+	isListSelected(listId: string) {
+		const list = this.lists.find(l => l.id === listId);
+		return list && list.selected;
 	}
 
-	isListActive(listId: string) {
-		return this.lists.includes(listId);
-	}
-
-	isTypeActive(type: string) {
-		return this.types.includes(type);
-	}
-
-	toggleList(listId: string) {
-		const index = this.lists.indexOf(listId);
-		if (index < 0) this.lists.push(listId);
-		else this.lists.splice(index, 1);
-	}
-
-	toggleType(type: string) {
-		const index = this.types.indexOf(type);
-		if (index < 0) this.types.push(type);
-		else this.types.splice(index, 1);
+	isTypeSelected(name: string) {
+		const type = this.types.find(t => t.name === name);
+		return type && type.selected;
 	}
 
 	getInfo(event: any) {
@@ -97,6 +87,10 @@ export class EventTableComponent {
 			default:
 				return undefined;
 		}
+	}
+
+	hasMoreInfo(event: any) {
+		return !['Open', 'Sent'].includes(event.EventType);
 	}
 
 	openDialog(event: any) {

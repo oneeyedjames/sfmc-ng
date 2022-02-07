@@ -1,12 +1,14 @@
 <div>
-	<strong>Lists:</strong>
-	<mat-checkbox [checked]="isListActive(list.Id)" (change)="toggleList(list.Id)"
-		*ngFor="let list of allLists">{{ list.Name }}</mat-checkbox>
+	<strong class="label">Lists:</strong>
+	<mat-checkbox [checked]="list.selected"
+		(change)="list.selected = !list.selected"
+		*ngFor="let list of lists">{{ list.name }}</mat-checkbox>
 </div>
 <div>
-	<strong>Events:</strong>
-	<mat-checkbox [checked]="isTypeActive(type)" (change)="toggleType(type)"
-		*ngFor="let type of allTypes">{{ type }}</mat-checkbox>
+	<strong class="label">Events:</strong>
+	<mat-checkbox [checked]="type.selected"
+		(change)="type.selected = !type.selected"
+		*ngFor="let type of types">{{ type.name }}</mat-checkbox>
 </div>
 <table mat-table [dataSource]="filteredEvents">
 	<ng-container matColumnDef="ListID">
