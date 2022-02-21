@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { formatDate } from '../app.functions';
 import { ApiService } from '../api.service';
 
 import { SearchService } from '../search/search.module';
+
+import { SubscriberDialogComponent } from './subscriber-dialog.component';
 
 @Component({
 	selector: 'subscriber',
@@ -109,9 +112,26 @@ export class SubscriberComponent {
 		return null;
 	}
 
-	constructor(private api: ApiService, private svc: SearchService) {}
+	constructor(
+		private api: ApiService,
+		private svc: SearchService,
+		private dialog: MatDialog
+	) {}
 
-	updateStatus(status = 'Active') {
+	deactivate() {
+		this.dialog.open(SubscriberDialogComponent)
+		.afterClosed().subscribe(res => {
+			if (res === 'unsubscribe') {
+				this.updateStatus('Unsubscribed');
+			}
+		})
+	}
+
+	reactivate() {
+		this.updateStatus('Active');
+	}
+
+	updateStatus(status: string) {
 		this.subscriber.loading = true;
 
 		const subKey = this.subscriber.SubscriberKey as string;

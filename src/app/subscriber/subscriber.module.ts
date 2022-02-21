@@ -9,6 +9,9 @@ import { EventModule } from '../event/event.module';
 import { SubscriberComponent } from './subscriber.component';
 export { SubscriberComponent } from './subscriber.component';
 
+import { SubscriberDialogComponent } from './subscriber-dialog.component';
+export { SubscriberDialogComponent } from './subscriber-dialog.component';
+
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -17,10 +20,12 @@ export { SubscriberComponent } from './subscriber.component';
 		EventModule
 	],
 	exports: [
-		SubscriberComponent
+		SubscriberComponent,
+		SubscriberDialogComponent
 	],
 	declarations: [
-		SubscriberComponent
+		SubscriberComponent,
+		SubscriberDialogComponent
 	]
 })
 export class SubscriberModule {}

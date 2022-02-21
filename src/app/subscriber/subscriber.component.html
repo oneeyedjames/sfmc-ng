@@ -2,14 +2,13 @@
 	<div *ngIf="subscriber.Status != 'Active'" style="float: right;">
 		<mat-spinner *ngIf="subscriber.loading"
 			color="primary" diameter="32"></mat-spinner>
-		<button mat-stroked-button color="primary" (click)="updateStatus()"
+		<button mat-stroked-button color="primary" (click)="reactivate()"
 			*ngIf="!subscriber.loading">Reactivate</button>
 	</div>
 	<div *ngIf="subscriber.Status == 'Active'" style="float: right;">
 		<mat-spinner *ngIf="subscriber.loading"
 			color="warn" diameter="32"></mat-spinner>
-		<button mat-stroked-button color="warn"
-			(click)="updateStatus('Unsubscribed')"
+		<button mat-stroked-button color="warn" (click)="deactivate()"
 			*ngIf="!subscriber.loading">Deactivate</button>
 	</div>
 	<p>
