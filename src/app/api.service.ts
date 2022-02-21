@@ -7,6 +7,8 @@ import {
 	HttpParams
 } from '@angular/common/http';
 
+import { env } from '../../env';
+
 type Params = {
 	[param: string]: string | number | boolean
 }
@@ -27,7 +29,7 @@ type HttpOptions = {
 export class ApiService {
 	private baseUrl = 'http://localhost:3000/api';
 
-	private token = '';
+	private token = env.API_KEY || '';
 
 	private headers = { Authorization: `JWT ${this.token}` };
 

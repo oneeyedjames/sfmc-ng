@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# private environment variables
+.env
+env.ts
+
 # compiled output
 /dist
 /tmp
