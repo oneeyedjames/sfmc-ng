@@ -15,6 +15,8 @@ import { SubscriberDialogComponent } from './subscriber-dialog.component';
 })
 export class SubscriberComponent {
 	private _subscriber: any;
+	private _localSubscriber?: any;
+	private _locale?: string;
 
 	get subscriber() { return this._subscriber; }
 
@@ -23,6 +25,29 @@ export class SubscriberComponent {
 		this._subscriber = subscriber;
 
 		const subKey = subscriber.SubscriberKey as string;
+
+		if (subscriber.Contact !== undefined) {
+			this._locale = subscriber.Contact.BusinessLocation;
+
+			this.api.getSubscribers(subKey, this._locale)
+			.then(subs => {
+				subs.forEach((sub: any) => {
+					sub.CreatedDate = new Date(sub.CreatedDate);
+
+					if (sub.UnsubscribedDate !== undefined)
+						sub.UnsubscribedDate = new Date(sub.UnsubscribedDate);
+				});
+
+				this._localSubscriber = subs[0];
+			}).catch(console.error);
+		} else {
+			this.dialog.open(SubscriberDialogComponent, {
+				data: {
+					title: 'Data Unavailable',
+					message: 'Sync data could not be retrieved for this subscriber.'
+				}
+			});
+		}
 
 		if (!subscriber.Lists) {
 			Promise.all([
@@ -97,19 +122,25 @@ export class SubscriberComponent {
 	}
 
 	get syncEmail() {
-		if (this.subscriber.Contact === undefined) return undefined;
-		if (this.subscriber.Contact.Email != this.subscriber.EmailAddress)
-			return this.subscriber.Contact.Email;
-
-		return null
+		return this.subscriber.Contact !== undefined
+			? this.subscriber.Contact.Email : 'Unknown';
 	}
 
 	get syncStatus() {
-		if (this.subscriber.Contact === undefined) return undefined;
-		if (this.subscriber.Contact.Status != this.subscriber.Status)
-			return this.subscriber.Contact.Status;
+		return this.subscriber.Contact !== undefined
+			? this.subscriber.Contact.Status : 'Unknown';
+	}
 
-		return null;
+	get locale() { return this._locale; }
+
+	get localStatus() {
+		if (this._localSubscriber === undefined) return undefined;
+		return this._localSubscriber.Status;
+	}
+
+	get localUnsubscribedDate() {
+		if (this._localSubscriber === undefined) return undefined;
+		return this._localSubscriber.UnsubscribedDate;
 	}
 
 	constructor(
@@ -118,27 +149,39 @@ export class SubscriberComponent {
 		private dialog: MatDialog
 	) {}
 
-	deactivate() {
-		this.dialog.open(SubscriberDialogComponent)
-		.afterClosed().subscribe(res => {
-			if (res === 'unsubscribe') {
-				this.updateStatus('Unsubscribed');
+	deactivate(locale?: string) {
+		this.dialog.open(SubscriberDialogComponent, {
+			data: {
+				title: 'Confirm Unsubscribe',
+				message: 'Are you sure you want to unsubscribe?',
+				isDestructive: true,
+				isCancellable: true
+			}
+		}).afterClosed().subscribe(res => {
+			if (res === 'ok') {
+				this.updateStatus('Unsubscribed', locale);
 			}
 		})
 	}
 
-	reactivate() {
-		this.updateStatus('Active');
+	reactivate(locale?: string) {
+		this.updateStatus('Active', locale);
 	}
 
-	updateStatus(status: string) {
-		this.subscriber.loading = true;
+	updateStatus(status: string, locale?: string) {
+		if (locale === undefined)
+			this.subscriber.loading = true;
+		else
+			this.subscriber.localLoading = true;
 
 		const subKey = this.subscriber.SubscriberKey as string;
 
-		this.api.updateSubscriber(subKey, status)
+		this.api.updateSubscriber(subKey, status, locale)
 		.then((res: any) => {
-			this.subscriber.loading = false;
+			if (locale === undefined)
+				this.subscriber.loading = false;
+			else
+				this.subscriber.localLoading = false;
 
 			if (res[0].StatusCode === 'OK') {
 				this.subscriber.Status = status;
@@ -174,7 +217,7 @@ export class SubscriberComponent {
 	}
 
 	formatDate(date?: Date) {
-		return formatDate(date);
+		return formatDate(date) || 'never';
 	}
 
 	search(input: string, event?: Event) {

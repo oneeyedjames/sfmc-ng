@@ -35,8 +35,9 @@ export class ApiService {
 
 	constructor(private http: HttpClient) {}
 
-	getSubscribers(input: string) {
-		return this.get('subscribers', { search: input });
+	getSubscribers(input: string, locale?: string) {
+		return locale === undefined ? this.get('subscribers', { search: input })
+			: this.get(`${locale.toLowerCase()}/subscribers`, { search: input });
 	}
 
 	getSubscriberLists(key: string) {
@@ -48,8 +49,10 @@ export class ApiService {
 			: this.get(`${locale.toLowerCase()}/subscriber/${key}/events`);
 	}
 
-	updateSubscriber(key: string, status: string) {
-		return this.put(`subscriber/${key}`, { Status: status });
+	updateSubscriber(key: string, status: string, locale?: string) {
+		const body = { Status: status };
+		return locale === undefined ? this.put(`subscriber/${key}`, body)
+			: this.put(`${locale.toLowerCase()}/subscriber/${key}`, body);
 	}
 
 	updateSubscriberList(key: string, listId: string, status: string) {

@@ -7,5 +7,21 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 	// styleUrls: ['./subscriber-dialog.component.scss']
 })
 export class SubscriberDialogComponent {
-	constructor(@Inject(MAT_DIALOG_DATA) public subscriber: any) {}
+	get okButtonColor() {
+		return this.config.isDestructive ? 'warn' : 'primary';
+	}
+
+	get useCancelButton() {
+		return this.config.isCancellable || this.config.isDestructive;
+	}
+
+	constructor(@Inject(MAT_DIALOG_DATA) public config: SubscriberDialogConfig) {}
+}
+
+export interface SubscriberDialogConfig {
+	icon?: string;
+	title?: string;
+	message?: string;
+	isCancellable?: boolean;
+	isDestructive?: boolean;
 }

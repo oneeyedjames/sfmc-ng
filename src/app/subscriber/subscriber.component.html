@@ -1,43 +1,87 @@
 <div *ngIf="subscriber != null">
-	<div *ngIf="subscriber.Status != 'Active'" style="float: right;">
-		<mat-spinner *ngIf="subscriber.loading"
-			color="primary" diameter="32"></mat-spinner>
-		<button mat-stroked-button color="primary" (click)="reactivate()"
-			*ngIf="!subscriber.loading">Reactivate</button>
-	</div>
-	<div *ngIf="subscriber.Status == 'Active'" style="float: right;">
-		<mat-spinner *ngIf="subscriber.loading"
-			color="warn" diameter="32"></mat-spinner>
-		<button mat-stroked-button color="warn" (click)="deactivate()"
-			*ngIf="!subscriber.loading">Deactivate</button>
-	</div>
-	<p>
-		<strong>Email:&nbsp;</strong>
-		<a (click)="search(subscriber.EmailAddress, $event)"
-			href="mailto:{{subscriber.EmailAddress}}">{{ subscriber.EmailAddress }}</a>
-		<span *ngIf="syncEmail">
-			<mat-icon class="inline">refresh</mat-icon>
-			<a (click)="search(syncEmail, $event)"
-				href="#">{{ syncEmail }}</a>
-		</span>
-	</p>
-	<p>
-		<strong>Status:</strong>
-		{{ subscriber.Status }}
-		<span *ngIf="syncStatus">
-			<mat-icon class="inline">refresh</mat-icon>
-			{{ syncStatus }}
-		</span>
-	</p>
-	<p>
-		<strong>Created:</strong>
-		{{ formatDate(subscriber.CreatedDate) }}
-	</p>
-	<p *ngIf="subscriber.UnsubscribedDate">
-		<strong>Unsubscribed:</strong>
-		{{ formatDate(subscriber.UnsubscribedDate) }}
-	</p>
+	<!-- <a (click)="search(subscriber.EmailAddress, $event)">{{ subscriber.EmailAddress }}</a> -->
 	<mat-tab-group mat-align-tabs="center">
+		<mat-tab label="Details">
+			<div class="grid">
+				<div class="header">
+					<h3>Account Details</h3>
+				</div>
+				<div class="tile">
+					<div class="label">Email</div>
+					<div class="field">{{ subscriber.EmailAddress }}</div>
+				</div>
+				<div class="tile">
+					<div class="label">Created On</div>
+					<div class="field">{{ formatDate(subscriber.CreatedDate) }}</div>
+				</div>
+				<div class="tile">
+					<div class="label">Sync Email</div>
+					<div class="field">{{ syncEmail }}</div>
+				</div>
+				<div class="header">
+					<h3>Global Status</h3>
+				</div>
+				<div class="tile">
+					<div style="float: right;">
+						<div *ngIf="subscriber.Status == 'Active'" style="float: right;">
+							<mat-spinner *ngIf="subscriber.loading"
+								color="warn" diameter="32"></mat-spinner>
+							<button mat-stroked-button color="warn" (click)="deactivate()"
+								*ngIf="!subscriber.loading">Deactivate</button>
+						</div>
+						<div *ngIf="subscriber.Status != 'Active'">
+							<mat-spinner *ngIf="subscriber.loading"
+								color="primary" diameter="32"></mat-spinner>
+							<button mat-stroked-button color="primary" (click)="reactivate()"
+								*ngIf="!subscriber.loading">Reactivate</button>
+						</div>
+					</div>
+					<div class="label">Status</div>
+					<div class="field">{{ subscriber.Status }}</div>
+				</div>
+				<div class="tile">
+					<div class="label">Unsubscribed On</div>
+					<div class="field">{{ formatDate(subscriber.UnsubscribedDate) }}</div>
+				</div>
+				<div class="tile">
+					<div class="label">Sync Status</div>
+					<div class="field">{{ syncStatus }}</div>
+				</div>
+				<div class="header">
+					<h3>Local Status</h3>
+				</div>
+				<mat-progress-bar *ngIf="!localStatus"
+					mode="indeterminate"></mat-progress-bar>
+				<div *ngIf="localStatus">
+					<div class="tile">
+						<div style="float: right;">
+							<div *ngIf="localStatus == 'Active'">
+								<mat-spinner *ngIf="subscriber.localLoading"
+									color="warn" diameter="32"></mat-spinner>
+								<button mat-stroked-button color="warn" (click)="deactivate(locale)"
+									*ngIf="!subscriber.localLoading">Deactivate</button>
+							</div>
+							<div *ngIf="localStatus != 'Active'">
+								<mat-spinner *ngIf="subscriber.localLoading"
+									color="primary" diameter="32"></mat-spinner>
+								<button mat-stroked-button color="primary" (click)="reactivate(locale)"
+									*ngIf="!subscriber.localLoading">Reactivate</button>
+							</div>
+						</div>
+						<div class="label">Status</div>
+						<div class="field">{{ localStatus }}</div>
+					</div>
+					<div class="tile">
+						<div class="label">Unsubscribed On</div>
+						<div class="field">{{ formatDate(localUnsubscribedDate) }}</div>
+					</div>
+					<div class="tile">
+						<div class="label">Location</div>
+						<div class="field">{{ locale }}</div>
+					</div>
+				</div>
+			</div>
+		</mat-tab>
 		<mat-tab label="Subscriptions">
 			<list-table [lists]="subscriber.Lists || []"
 				(update)="updateList($event)"></list-table>

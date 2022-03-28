@@ -1,11 +1,12 @@
 <h1 mat-dialog-title>
-	Confirm Unsubscribe
+	<mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon>
+	{{ config.title }}
 	<!-- <mat-icon mat-dialog-close class="close">close</mat-icon> -->
 </h1>
 <mat-dialog-content>
-	<p>Are you sure you want to unsubscribe?</p>
+	<p>{{ config.message }}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-	<button mat-button mat-dialog-close color="warn">Cancel</button>
-	<button mat-button mat-dialog-close="unsubscribe" color="primary">Ok</button>
+	<button mat-button mat-dialog-close="ok" color="{{ okButtonColor }}">Ok</button>
+	<button mat-button mat-dialog-close *ngIf="useCancelButton">Cancel</button>
 </mat-dialog-actions>
