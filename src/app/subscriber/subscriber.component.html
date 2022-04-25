@@ -18,6 +18,10 @@
 					<div class="label">Sync Email</div>
 					<div class="field">{{ syncEmail }}</div>
 				</div>
+				<div class="tile">
+					<div class="label">Location</div>
+					<div class="field">{{ locale || 'Unknown' }}</div>
+				</div>
 				<div class="header">
 					<h3>Global Status</h3>
 				</div>
@@ -74,10 +78,6 @@
 					<div class="tile">
 						<div class="label">Unsubscribed On</div>
 						<div class="field">{{ formatDate(localUnsubscribedDate) }}</div>
-					</div>
-					<div class="tile">
-						<div class="label">Location</div>
-						<div class="field">{{ locale }}</div>
 					</div>
 				</div>
 			</div>
