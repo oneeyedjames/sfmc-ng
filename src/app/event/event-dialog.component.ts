@@ -50,7 +50,7 @@ export class EventDialogComponent {
 	get unsubContext() {
 		if (this.isUnsub) {
 			return this.event.IsMasterUnsubscribed === 'true'
-				? 'All' : this.event.ListCode;
+				? this.event.Locale || 'All' : this.event.ListCode;
 		}
 
 		return undefined;

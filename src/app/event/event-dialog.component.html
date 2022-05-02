@@ -1,16 +1,14 @@
 <h1 mat-dialog-title>
-	Event Details
+	{{ event.EventType }}
 	<mat-icon mat-dialog-close class="close">close</mat-icon>
 </h1>
 <div mat-dialog-content>
-	<h2>List</h2>
-	<p>{{ event.ListName }}</p>
-	<h2>Email</h2>
-	<p>{{ event.EmailName }}</p>
-	<h2>Date</h2>
 	<p>{{ formatDate(event.EventDate) }}</p>
-	<h2>Type</h2>
-	<p>{{ event.EventType }}</p>
+	<h2>List</h2>
+	<p>({{ event.ListID }}) {{ event.ListName }}</p>
+	<h2>Email</h2>
+	<p>({{ event.SendID }}) {{ event.EmailName }}</p>
+	<p>{{ formatDate (event.SendDate) }}</p>
 	<p *ngIf="hasMoreInfo">
 		<mat-divider></mat-divider>
 	</p>

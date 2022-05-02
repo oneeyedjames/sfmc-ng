@@ -92,13 +92,17 @@ export class SubscriberComponent {
 		}
 
 		if (!subscriber.Events) {
+			const formatEvent = (locale?: string) => (event: any) => {
+				event.EventDate = new Date(event.EventDate);
+				event.SendDate = new Date(event.SendDate);
+				event.Locale = locale;
+			}
+
 			this.api.getSubscriberEvents(subKey)
 			.then(events => {
 				subscriber.Events = events;
 
-				events.forEach((event: any) => {
-					event.EventDate = new Date(event.EventDate);
-				});
+				events.forEach(formatEvent());
 
 				if (subscriber.Contact) {
 					return this.api.getSubscriberEvents(subKey,
@@ -110,9 +114,7 @@ export class SubscriberComponent {
 			.then(events => {
 				subscriber.Events = [ ...subscriber.Events, ...events ];
 
-				events.forEach((event: any) => {
-					event.EventDate = new Date(event.EventDate);
-				});
+				events.forEach(formatEvent(subscriber.Contact.BusinessLocation));
 			})
 			.catch(err => {
 				// subscriber.Events = [];

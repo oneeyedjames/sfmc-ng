@@ -82,8 +82,8 @@ export class EventTableComponent {
 					return event.URL;
 				}
 			case 'Unsubscribe':
-				return event.IsMasterUnsubscribed === 'true'
-					? 'from All' : 'from ' + event.ListCode;
+				return 'from ' + (event.IsMasterUnsubscribed === 'true'
+					? event.Locale || 'All' : event.ListCode);
 			default:
 				return undefined;
 		}
