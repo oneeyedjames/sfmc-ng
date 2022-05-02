@@ -90,8 +90,10 @@
 		</mat-tab>
 		<mat-tab label="History">
 			<event-table [events]="subscriber.Events || []"></event-table>
-			<mat-progress-bar *ngIf="!subscriber.Events"
+			<mat-progress-bar *ngIf="fetching === 'global'"
 				mode="indeterminate"></mat-progress-bar>
+			<mat-progress-bar *ngIf="fetching === 'local'"
+				mode="indeterminate" color="accent"></mat-progress-bar>
 		</mat-tab>
 	</mat-tab-group>
 </div>

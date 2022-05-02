@@ -18,6 +18,8 @@ export class SubscriberComponent {
 	private _localSubscriber?: any;
 	private _locale?: string;
 
+	fetching?: 'global' | 'local';
+
 	get subscriber() { return this._subscriber; }
 
 	@Input()
@@ -93,26 +95,30 @@ export class SubscriberComponent {
 				event.Locale = locale;
 			}
 
+			this.fetching = 'global';
+
 			this.api.getSubscriberEvents(subKey)
 			.then(events => {
 				subscriber.Events = events;
-
 				events.forEach(formatEvent());
 
 				if (subscriber.Contact) {
+					this.fetching = 'local';
 					return this.api.getSubscriberEvents(subKey,
 						subscriber.Contact.BusinessLocation);
 				} else {
+					this.fetching = undefined;
 					return [];
 				}
 			})
 			.then(events => {
 				subscriber.Events = [ ...subscriber.Events, ...events ];
-
 				events.forEach(formatEvent(subscriber.Contact.BusinessLocation));
+
+				this.fetching = undefined;
 			})
 			.catch(err => {
-				// subscriber.Events = [];
+				this.fetching = undefined;
 				console.error(err);
 			});
 		}
