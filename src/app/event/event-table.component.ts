@@ -43,7 +43,7 @@ export class EventTableComponent {
 	lists: any[] = [];
 	types: any[] = [];
 
-	cols = ['ListID', 'ListName', 'EventType', 'EventDate', 'EventInfo'];
+	cols = ['Locale', 'ListID', 'ListName', 'EventType', 'EventDate', 'EventInfo'];
 
 	get selectedLists() {
 		return this.lists.filter(l => l.selected);

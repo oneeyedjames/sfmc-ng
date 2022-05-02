@@ -11,6 +11,13 @@
 		*ngFor="let type of types">{{ type.name }}</mat-checkbox>
 </div>
 <table mat-table [dataSource]="filteredEvents">
+	<ng-container matColumnDef="Locale">
+		<th mat-header-cell *matHeaderCellDef>Location</th>
+		<td mat-cell *matCellDef="let event">
+			{{ event.Locale || 'Global' }}
+		</td>
+	</ng-container>
+
 	<ng-container matColumnDef="ListID">
 		<th mat-header-cell *matHeaderCellDef>List ID</th>
 		<td mat-cell *matCellDef="let event">{{ event.ListID }}</td>
