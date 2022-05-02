@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { formatDate, formatTime } from '../app.functions';
+import { formatDateTime } from '../app.functions';
 import { EventDialogComponent } from './event-dialog.component';
 
 @Component({
@@ -98,10 +98,6 @@ export class EventTableComponent {
 	}
 
 	formatDate(date?: Date) {
-		return formatDate(date);
-	}
-
-	formatTime(date?: Date) {
-		return formatTime(date);
+		return formatDateTime(date);
 	}
 }

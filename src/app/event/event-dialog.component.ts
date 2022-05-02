@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { formatDateTime } from '../app.functions';
+
 @Component({
 	selector: 'event-dialog',
 	templateUrl: './event-dialog.component.html',
@@ -52,5 +54,9 @@ export class EventDialogComponent {
 		}
 
 		return undefined;
+	}
+
+	formatDate(date?: Date) {
+		return formatDateTime(date);
 	}
 }
