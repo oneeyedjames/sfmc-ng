@@ -39,3 +39,8 @@ export function formatDateTime(date?: Date): string {
 export function formatTime(date?: Date): string {
 	return formatDate(date, 'time');
 }
+
+export function parseDate(date?: string): Date | undefined {
+	if (date === undefined) return undefined;
+	return new Date(date + '-0600');
+}

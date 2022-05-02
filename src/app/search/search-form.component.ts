@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/cor
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
+import { parseDate } from '../app.functions';
 import { ApiService } from '../api.service';
 import { SearchService } from './search.service';
 
@@ -51,10 +52,8 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 			this.api.getSubscribers(this.inputCtrl.value)
 		]).then(([cons, subs]) => {
 			subs.forEach((sub: any) => {
-				sub.CreatedDate = new Date(sub.CreatedDate);
-
-				if (sub.UnsubscribedDate !== undefined)
-					sub.UnsubscribedDate = new Date(sub.UnsubscribedDate);
+				sub.CreatedDate = parseDate(sub.CreatedDate);
+				sub.UnsubscribedDate = parseDate(sub.UnsubscribedDate);
 			});
 
 			cons.forEach((con: any) => {

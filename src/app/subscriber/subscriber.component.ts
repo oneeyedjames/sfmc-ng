@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { formatDate } from '../app.functions';
+import { formatDate, parseDate } from '../app.functions';
 import { ApiService } from '../api.service';
 
 import { SearchService } from '../search/search.module';
@@ -32,10 +32,8 @@ export class SubscriberComponent {
 			this.api.getSubscribers(subKey, this._locale)
 			.then(subs => {
 				subs.forEach((sub: any) => {
-					sub.CreatedDate = new Date(sub.CreatedDate);
-
-					if (sub.UnsubscribedDate !== undefined)
-						sub.UnsubscribedDate = new Date(sub.UnsubscribedDate);
+					sub.CreatedDate = parseDate(sub.CreatedDate);
+					sub.UnsubscribedDate = parseDate(sub.UnsubscribedDate);
 				});
 
 				this._localSubscriber = subs[0];
@@ -57,12 +55,9 @@ export class SubscriberComponent {
 				subscriber.Lists = lists;
 
 				lists.forEach((list: any) => {
-					list.CreatedDate = new Date(list.CreatedDate);
-					list.ModifiedDate = new Date(list.ModifiedDate);
-					list.UnsubscribedDate = list.UnsubscribedDate || undefined;
-
-					if (list.UnsubscribedDate !== undefined)
-						list.UnsubscribedDate = new Date(list.UnsubscribedDate);
+					list.CreatedDate = parseDate(list.CreatedDate);
+					list.ModifiedDate = parseDate(list.ModifiedDate);
+					list.UnsubscribedDate = parseDate(list.UnsubscribedDate);
 				});
 
 				subs.forEach((sub: any) => {
@@ -93,8 +88,8 @@ export class SubscriberComponent {
 
 		if (!subscriber.Events) {
 			const formatEvent = (locale?: string) => (event: any) => {
-				event.EventDate = new Date(event.EventDate);
-				event.SendDate = new Date(event.SendDate);
+				event.EventDate = parseDate(event.EventDate);
+				event.SendDate = parseDate(event.SendDate);
 				event.Locale = locale;
 			}
 
