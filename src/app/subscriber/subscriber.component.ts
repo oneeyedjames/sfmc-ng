@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { formatDate } from '../app.functions';
+import { formatDateTime } from '../app.functions';
 import { ApiService } from '../api.service';
 
 import { SearchService } from '../search/search.module';
@@ -207,7 +207,7 @@ export class SubscriberComponent {
 	}
 
 	formatDate(date?: Date) {
-		return formatDate(date) || 'never';
+		return formatDateTime(date) || 'never';
 	}
 
 	search(input: string, event?: Event) {
