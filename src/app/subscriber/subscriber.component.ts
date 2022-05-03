@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { formatDate, parseDate } from '../app.functions';
+import { formatDate } from '../app.functions';
 import { ApiService } from '../api.service';
 
 import { SearchService } from '../search/search.module';
@@ -33,11 +33,6 @@ export class SubscriberComponent {
 
 			this.api.getSubscribers(subKey, this._locale)
 			.then(subs => {
-				subs.forEach((sub: any) => {
-					sub.CreatedDate = parseDate(sub.CreatedDate);
-					sub.UnsubscribedDate = parseDate(sub.UnsubscribedDate);
-				});
-
 				this._localSubscriber = subs[0];
 			}).catch(console.error);
 		} else {
@@ -55,12 +50,6 @@ export class SubscriberComponent {
 				this.api.getContactSubscriptions(subKey)
 			]).then(([lists, subs]) => {
 				subscriber.Lists = lists;
-
-				lists.forEach((list: any) => {
-					list.CreatedDate = parseDate(list.CreatedDate);
-					list.ModifiedDate = parseDate(list.ModifiedDate);
-					list.UnsubscribedDate = parseDate(list.UnsubscribedDate);
-				});
 
 				subs.forEach((sub: any) => {
 					const list = lists.find((l: any) => {
@@ -90,8 +79,6 @@ export class SubscriberComponent {
 
 		if (!subscriber.Events) {
 			const formatEvent = (locale?: string) => (event: any) => {
-				event.EventDate = parseDate(event.EventDate);
-				event.SendDate = parseDate(event.SendDate);
 				event.Locale = locale;
 			}
 
