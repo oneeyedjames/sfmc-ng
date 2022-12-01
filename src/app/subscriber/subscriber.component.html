@@ -8,7 +8,12 @@
 				</div>
 				<div class="tile">
 					<div class="label">Email</div>
-					<div class="field">{{ subscriber.EmailAddress }}</div>
+					<div class="field">
+						<a href="{{ 'mailto:' + subscriber.EmailAddress }}"
+							(click)="search(subscriber.EmailAddress, $event)">
+							{{ subscriber.EmailAddress }}
+						</a>
+					</div>
 				</div>
 				<div class="tile">
 					<div class="label">Created On</div>
@@ -16,7 +21,12 @@
 				</div>
 				<div class="tile">
 					<div class="label">Sync Email</div>
-					<div class="field">{{ syncEmail }}</div>
+					<div class="field">
+						<a href="{{ 'mailto:' + syncEmail }}"
+							(click)="search(syncEmail, $event)">
+							{{ syncEmail }}
+						</a>
+					</div>
 				</div>
 				<div class="tile">
 					<div class="label">Location</div>
